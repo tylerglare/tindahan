@@ -9,7 +9,7 @@ class Spritesheet:
 
     def get_sprite(self, x, y, width, height):
         sprite = pygame.Surface([width, height])
-        sprite.blit(self.sheet, (0,0), (x, y, width, height))
+        sprite.blit(self.sheet, (0, 0), (x, y, width, height))
         sprite.set_colorkey(BLACK)
         return sprite
 
@@ -17,7 +17,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
 
         self.game = game
-        self.layer = PLAYER_LAYER
+        self._layer = PLAYER_LAYER
         self.groups = self.game.all_sprites
         pygame.sprite.Sprite.__init__(self, self.groups)
 
@@ -32,7 +32,7 @@ class Player(pygame.sprite.Sprite):
         self.facing = 'down'
         self.animation_loop = 1
 
-        self.image = self.game.character_spritesheet.get_sprite(3, 2, self.width, self.height )
+        self.image = self.game.character_spritesheet.get_sprite(3, 2, self.width, self.height)
 
 
         self.rect = self.image.get_rect()
@@ -164,7 +164,7 @@ class Enemy(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
 
         self.game = game
-        self.layer = ENEMY_LAYER
+        self._layer = ENEMY_LAYER
         self.groups = self.game.all_sprites, self.game.enemies
         pygame.sprite.Sprite.__init__(self, self.groups)
 
@@ -289,7 +289,7 @@ class Button:
         self.fg = fg
         self.bg = bg
         
-        self.image = pygame.Surface([self.width, self.height])
+        self.image = pygame.Surface((self.width, self.height))
         self.image.fill(self.bg)
         self.rect = self.image.get_rect()
 
@@ -365,25 +365,25 @@ class Attack(pygame.sprite.Sprite):
         direction = self.game.player.facing
 
         if direction == 'up':
-            self.image = self.up_animations[math.floor(self.animatiom_loop)]
+            self.image = self.up_animations[math.floor(self.animation_loop)]
             self.animation_loop += 0.5
             if self.animation_loop >= 5:
                 self.kill()
 
         if direction == 'down':
-            self.image = self.down_animations[math.floor(self.animatiom_loop)]
+            self.image = self.down_animations[math.floor(self.animation_loop)]
             self.animation_loop += 0.5
             if self.animation_loop >= 5:
                 self.kill()
 
         if direction == 'left':
-            self.image = self.left_animations[math.floor(self.animatiom_loop)]
+            self.image = self.left_animations[math.floor(self.animation_loop)]
             self.animation_loop += 0.5
             if self.animation_loop >= 5:
                 self.kill()
 
         if direction == 'right':
-            self.image = self.right_animations[math.floor(self.animatiom_loop)]
+            self.image = self.right_animations[math.floor(self.animation_loop)]
             self.animation_loop += 0.5
             if self.animation_loop >= 5:
                 self.kill()
