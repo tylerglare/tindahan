@@ -18,17 +18,6 @@ class Game:
         self.intro_background = pygame.image.load('img/introbackground.png')
         self.go_background = pygame.image.load('img/gameover.png')
 
-    def new(self):
-        #a new game starts
-        self.playing = True
-
-        self.all_sprites = pygame.sprite.LayeredUpdates()
-        self.blocks = pygame.sprite.LayeredUpdates()
-        self.enemies = pygame.sprite.LayeredUpdates()
-        self.attacks = pygame.sprite.LayeredUpdates() 
-
-        self.createTilemap()   
-
     def createTilemap(self):
         for i, row in enumerate(tilemap):
             for j, column in enumerate(row):
@@ -39,6 +28,17 @@ class Game:
                     Enemy(self, j, i)
                 if column == 'P':
                     self.player = Player(self, j, i)
+
+    def new(self):
+        #a new game starts
+        self.playing = True
+
+        self.all_sprites = pygame.sprite.LayeredUpdates()
+        self.blocks = pygame.sprite.LayeredUpdates()
+        self.enemies = pygame.sprite.LayeredUpdates()
+        self.attacks = pygame.sprite.LayeredUpdates() 
+
+        self.createTilemap()   
 
     def events(self):
         #game loop events
@@ -98,7 +98,7 @@ class Game:
 
             if restart_button.is_pressed(mouse_pos, mouse_pressed):
                 self.new()
-                self.main
+                self.main()
 
             self.screen.blit(self.go_background, (0, 0))
             self.screen.blit(text, text_rect)
@@ -126,7 +126,7 @@ class Game:
             if play_button.is_pressed(mouse_pos, mouse_pressed):
                 intro = False
             
-            self.screen.blit(self.intro_background, (0,0))
+            self.screen.blit(self.intro_background, (0, 0))
             self.screen.blit(title, title_rect)
             self.screen.blit(play_button.image, play_button.rect)
             self.clock.tick(FPS)
