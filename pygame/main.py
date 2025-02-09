@@ -6,6 +6,7 @@ import sys
 class Game:
     def __init__(self):
         pygame.init()
+        print(f"Screen size: {WIN_WIDTH}x{WIN_HEIGHT}")
         self.screen = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
         self.clock = pygame.time.Clock()
         self.font = pygame.font.Font('arial.ttf', 32)
@@ -14,12 +15,13 @@ class Game:
         self.character_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/JUNJUN IDLE RIGHT.png')
         self.mainwalkright_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/JUNJUN WALK RIGHT.png')
         self.mainwalkleft_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/JUNJUN WALK LEFT.png')
-        self.terrain_spritesheet = Spritesheet('img/terrain.png')
+        self.terrain_spritesheet = Spritesheet('img/house.png')
         self.enemywalkright_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/TAMBAY1 WALK RIGHT.png')
         self.enemywalkleft_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/TAMBAY1 WALK LEFT.png')
         self.enemyidle_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/TAMBAY1 IDLE RIGHT.png')
         self.attack_spritesheet = Spritesheet('img/attack.png')
-        self.intro_background = pygame.image.load('img/INTROSTORE.png')
+        self.intro_background = pygame.image.load('img/INTROSTORE.jpg')
+        self.intro_background = pygame.transform.scale(self.intro_background, (800, 512))
         self.go_background = pygame.image.load('img/gameover.png')
 
     def createTilemap(self):
@@ -139,8 +141,8 @@ class Game:
     def intro_screen(self):
         intro = True
 
-        #title = self.font.render('Tindahan ni Aling Nena', True, BLACK)
-        #title_rect = title.get_rect(x=10, y=10)
+        title = self.font.render('Tindahan ni Aling Nena', True, BLACK)
+        self.title_rect = title.get_rect(x=10, y=10)
 
         play_button = Button(10, 50, 100, 50, WHITE, BLACK, 'Play', 32)
         
