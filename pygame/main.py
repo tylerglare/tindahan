@@ -86,7 +86,7 @@ class Game:
         restart_button = Button(10, WIN_HEIGHT - 60, 120, 50, WHITE, BLACK, 'Restart', 32)
 
         for sprite in self.all_sprites:
-            sprite.kil()
+            sprite.kill()
 
         while self.running:
             for event in pygame.event.get():
