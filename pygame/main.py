@@ -11,11 +11,15 @@ class Game:
         self.font = pygame.font.Font('arial.ttf', 32)
         self.running = True
         
-        self.character_spritesheet = Spritesheet('img/character.png')
+        self.character_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/JUNJUN IDLE RIGHT.png')
+        self.mainwalkright_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/JUNJUN WALK RIGHT.png')
+        self.mainwalkleft_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/JUNJUN WALK LEFT.png')
         self.terrain_spritesheet = Spritesheet('img/terrain.png')
-        self.enemy_spritesheet = Spritesheet('img/enemy.png')
+        self.enemywalkright_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/TAMBAY1 WALK RIGHT.png')
+        self.enemywalkleft_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/TAMBAY1 WALK LEFT.png')
+        self.enemyidle_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/TAMBAY1 IDLE RIGHT.png')
         self.attack_spritesheet = Spritesheet('img/attack.png')
-        self.intro_background = pygame.image.load('img/introbackground.png')
+        self.intro_background = pygame.image.load('img/INTROSTORE.png')
         self.go_background = pygame.image.load('img/gameover.png')
 
     def createTilemap(self):
@@ -57,6 +61,32 @@ class Game:
                         Attack(self, self.player.rect.x - TILESIZE, self.player.rect.y)
                     if self.player.facing == 'right':
                         Attack(self, self.player.rect.x + TILESIZE, self.player.rect.y)
+
+    def show_convo(self, npc):
+   
+        convo_box = pygame.Rect(WIN_WIDTH // 4, WIN_HEIGHT - 100, WIN_WIDTH // 2, 80)
+        font = pygame.font.Font(None, 24)
+        text = font.render(f"{npc.name}: Hello there!", True, WHITE)
+        text_rect = text.get_rect(center=convo_box.center)
+
+        running = True
+        while running:
+            self.screen.fill(BLACK, convo_box)
+            pygame.draw.rect(self.screen, WHITE, convo_box, 2)
+            self.screen.blit(text, text_rect)
+
+            pygame.display.update()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:  # Close chat box normally
+                        running = False
+                    elif event.key == pygame.K_x:  # Remove NPC permanently
+                        npc.remove_npc()
+                        running = False
 
 
     def update(self):
@@ -109,8 +139,8 @@ class Game:
     def intro_screen(self):
         intro = True
 
-        title = self.font.render('Tindahan ni Aling Nena', True, BLACK)
-        title_rect = title.get_rect(x=10, y=10)
+        #title = self.font.render('Tindahan ni Aling Nena', True, BLACK)
+        #title_rect = title.get_rect(x=10, y=10)
 
         play_button = Button(10, 50, 100, 50, WHITE, BLACK, 'Play', 32)
         
@@ -127,7 +157,7 @@ class Game:
                 intro = False
             
             self.screen.blit(self.intro_background, (0, 0))
-            self.screen.blit(title, title_rect)
+            #self.screen.blit(title, title_rect)
             self.screen.blit(play_button.image, play_button.rect)
             self.clock.tick(FPS)
             pygame.display.update()
