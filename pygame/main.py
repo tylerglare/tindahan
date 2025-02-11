@@ -6,7 +6,6 @@ import sys
 class Game:
     def __init__(self):
         pygame.init()
-        print(f"Screen size: {WIN_WIDTH}x{WIN_HEIGHT}")
         self.screen = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
         self.clock = pygame.time.Clock()
         self.font = pygame.font.Font('arial.ttf', 32)
@@ -19,7 +18,6 @@ class Game:
         self.enemywalkright_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/TAMBAY1 WALK RIGHT.png')
         self.enemywalkleft_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/TAMBAY1 WALK LEFT.png')
         self.enemyidle_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/TAMBAY1 IDLE RIGHT.png')
-        self.attack_spritesheet = Spritesheet('img/attack.png')
         self.intro_background = pygame.image.load('img/INTROSTORE.jpg')
         self.intro_background = pygame.transform.scale(self.intro_background, (800, 512))
         self.go_background = pygame.image.load('img/gameover.png')
@@ -36,114 +34,80 @@ class Game:
                     self.player = Player(self, j, i)
 
     def new(self):
-        #a new game starts
         self.playing = True
-
         self.all_sprites = pygame.sprite.LayeredUpdates()
         self.blocks = pygame.sprite.LayeredUpdates()
         self.enemies = pygame.sprite.LayeredUpdates()
-        self.attacks = pygame.sprite.LayeredUpdates() 
+        self.createTilemap()
 
-        self.createTilemap()   
-
-    def events(self):
-        #game loop events
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.playing = False
-                self.running = False
-            
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    if self.player.facing == 'up':
-                        Attack(self, self.player.rect.x, self.player.rect.y - TILESIZE)
-                    if self.player.facing == 'down':
-                        Attack(self, self.player.rect.x, self.player.rect.y + TILESIZE)
-                    if self.player.facing == 'left':
-                        Attack(self, self.player.rect.x - TILESIZE, self.player.rect.y)
-                    if self.player.facing == 'right':
-                        Attack(self, self.player.rect.x + TILESIZE, self.player.rect.y)
-
-    def show_convo(self, npc):
-   
-        convo_box = pygame.Rect(WIN_WIDTH // 4, WIN_HEIGHT - 100, WIN_WIDTH // 2, 80)
+    def show_question(self, question, choices):
+        question_box = pygame.Rect(WIN_WIDTH // 4, WIN_HEIGHT // 4, WIN_WIDTH // 2, 100)
         font = pygame.font.Font(None, 24)
-        text = font.render(f"{npc.name}: Hello there!", True, WHITE)
-        text_rect = text.get_rect(center=convo_box.center)
+        text = font.render(question, True, WHITE)
+        text_rect = text.get_rect(center=question_box.center)
+        
+        buttons = []
+        button_width = 200
+        button_height = 40
+        button_x = WIN_WIDTH // 3
+        button_y = WIN_HEIGHT // 2
+        
+        for i, choice in enumerate(choices):
+            button_rect = pygame.Rect(button_x, button_y + i * (button_height + 10), button_width, button_height)
+            buttons.append((button_rect, choice))
 
         running = True
         while running:
-            self.screen.fill(BLACK, convo_box)
-            pygame.draw.rect(self.screen, WHITE, convo_box, 2)
+            self.screen.fill(BLACK, question_box)
+            pygame.draw.rect(self.screen, WHITE, question_box, 2)
             self.screen.blit(text, text_rect)
-
+            
+            for button, choice in buttons:
+                pygame.draw.rect(self.screen, BLUE, button)
+                choice_text = font.render(choice, True, WHITE)
+                choice_text_rect = choice_text.get_rect(center=button.center)
+                self.screen.blit(choice_text, choice_text_rect)
+            
             pygame.display.update()
-
+            
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_RETURN:  # Close chat box normally
-                        running = False
-                    elif event.key == pygame.K_x:  # Remove NPC permanently
-                        npc.remove_npc()
-                        running = False
-
-
-    def update(self):
-        #game loop updates
-        self.all_sprites.update()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    for button, choice in buttons:
+                        if button.collidepoint(event.pos):
+                            print(f"Player chose: {choice}")
+                            running = False
             
+            pygame.time.delay(100)
 
+    def events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.playing = False
+                self.running = False
+    
+    def update(self):
+        self.all_sprites.update()
+        enemy_hits = pygame.sprite.spritecollide(self.player, self.enemies, False)
+        if enemy_hits:
+            self.show_question("Anong ambag mo?", ["1", "2", "3", "4"])
+    
     def draw(self):
-        #game loop draw
         self.screen.fill(BLACK)
         self.all_sprites.draw(self.screen)
         self.clock.tick(FPS)
         pygame.display.update()
-            
-
+    
     def main(self):
-        #game loop
         while self.playing:
             self.events()
             self.update()
             self.draw()
-
-    def game_over(self):
-        text = self.font.render('Game Over', True, WHITE)
-        text_rect = text.get_rect(center=(WIN_WIDTH/2, WIN_HEIGHT/2))
-
-        restart_button = Button(10, WIN_HEIGHT - 60, 120, 50, WHITE, BLACK, 'Restart', 32)
-
-        for sprite in self.all_sprites:
-            sprite.kill()
-
-        while self.running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
-
-            mouse_pos = pygame.mouse.get_pos()
-            mouse_pressed = pygame.mouse.get_pressed()
-
-            if restart_button.is_pressed(mouse_pos, mouse_pressed):
-                self.new()
-                self.main()
-
-            self.screen.blit(self.go_background, (0, 0))
-            self.screen.blit(text, text_rect)
-            self.screen.blit(restart_button.image, restart_button.rect)
-            self.clock.tick(FPS)
-            pygame.display.update()
-
+    
     def intro_screen(self):
         intro = True
-
-        title = self.font.render('Tindahan ni Aling Nena', True, BLACK)
-        self.title_rect = title.get_rect(x=10, y=10)
-
         play_button = Button(10, 50, 100, 50, WHITE, BLACK, 'Play', 32)
         
         while intro:
@@ -151,15 +115,13 @@ class Game:
                 if event.type == pygame.QUIT:
                     intro = False
                     self.running = False
-
+            
             mouse_pos = pygame.mouse.get_pos()
             mouse_pressed = pygame.mouse.get_pressed()
-
             if play_button.is_pressed(mouse_pos, mouse_pressed):
                 intro = False
             
             self.screen.blit(self.intro_background, (0, 0))
-            #self.screen.blit(title, title_rect)
             self.screen.blit(play_button.image, play_button.rect)
             self.clock.tick(FPS)
             pygame.display.update()
@@ -169,7 +131,6 @@ g.intro_screen()
 g.new()
 while g.running:
     g.main()
-    g.game_over()
 
 pygame.quit()
 sys.exit()
