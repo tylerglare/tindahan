@@ -1,0 +1,16 @@
+{
+    "questions": [
+        {
+            "conversation": "Hello! I have a question for you."
+        },
+        {
+            "question": "What is your favorite color?",
+            "choices": ["Red", "Blue", "Green"]
+        },
+        {
+          
+            "question": "Which path will you take?",
+            "choices": ["Left", "Right", "Straight"]
+        }
+    ]
+}
