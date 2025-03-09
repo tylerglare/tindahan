@@ -2,6 +2,7 @@ import pygame
 from config import *
 import math
 import random
+import json
 
 class Spritesheet:
     def __init__(self, file):
@@ -121,27 +122,29 @@ class Player(pygame.sprite.Sprite):
     def collide_solid(self, direction):
         """Prevents the player from walking through enemies or blocks."""
         if direction == "x":
-            hits = pygame.sprite.spritecollide(self, self.game.enemies, False) or pygame.sprite.spritecollide(self, self.game.blocks, False)
+            hits = pygame.sprite.spritecollide(self, self.game.npcs, False) or pygame.sprite.spritecollide(self, self.game.blocks, False)
             return bool(hits)
 
         if direction == "y":
-            hits = pygame.sprite.spritecollide(self, self.game.enemies, False) or pygame.sprite.spritecollide(self, self.game.blocks, False)
+            hits = pygame.sprite.spritecollide(self, self.game.npcs, False) or pygame.sprite.spritecollide(self, self.game.blocks, False)
             return bool(hits)
 
     def out_of_bounds(self):
-        """Prevents the player from going beyond the game borders."""
+      
         return (
             self.rect.left < 0 or
-            self.rect.right > WIN_WIDTH or
+            self.rect.right > self.game.camera.width or
             self.rect.top < 0 or
-            self.rect.bottom > WIN_HEIGHT
+            self.rect.bottom > self.game.camera.height
         )
 
-class Enemy(pygame.sprite.Sprite):
+
+class NPC(pygame.sprite.Sprite):
     def __init__(self, game, x, y, name="Tambay"):
         self.game = game
-        self._layer = ENEMY_LAYER
-        self.groups = self.game.all_sprites, self.game.enemies
+        self.name = name
+        self._layer = NPC_LAYER
+        self.groups = self.game.all_sprites, self.game.npcs
         pygame.sprite.Sprite.__init__(self, self.groups)
 
         self.x = x * TILESIZE
@@ -155,19 +158,23 @@ class Enemy(pygame.sprite.Sprite):
         self.max_travel = 5 * TILESIZE
         self.idle = False
         self.idle_time = 0
-        self.speed = ENEMY_SPEED
+        self.speed = NPC_SPEED
         self.start_tile = (self.rect.x, self.rect.y)
+        self.start_x = x * TILESIZE
+        self.start_y = y * TILESIZE
+        self.direction = 'right'
 
         # Direction
-        self.facing = random.choice(['down', 'left', 'right'])
+        self.facing = random.choice(['left', 'right'])
         self.animation_loop = 0
         self.last_update = pygame.time.get_ticks()
+        self.animation_speed = 150  # Match player animation speed
         self.animations = {
-            "up": self.load_animations(self.game.enemywalkright_spritesheet),
-            "down": self.load_animations(self.game.enemywalkright_spritesheet),
-            "left": self.load_animations(self.game.enemywalkleft_spritesheet),
-            "right": self.load_animations(self.game.enemywalkright_spritesheet),
-            "idle": self.load_animations(self.game.enemyidle_spritesheet)
+            "up": self.load_animations(self.game.npcwalkright_spritesheet),
+            "down": self.load_animations(self.game.npcwalkright_spritesheet),
+            "left": self.load_animations(self.game.npcwalkleft_spritesheet),
+            "right": self.load_animations(self.game.npcwalkright_spritesheet),
+            "idle": self.load_animations(self.game.npcidle_spritesheet)
         }
 
         self.image = self.animations[self.facing][0]
@@ -175,12 +182,19 @@ class Enemy(pygame.sprite.Sprite):
 
         self.name = name  # NPC name for dialogue
         self.removed = False  # New flag to check if NPC should be deleted
-    
+        self.asked_question = False  # Flag to ensure the question is asked only once
+        
+        with open('c:\\Users\\This PC\\OneDrive\\Documents\\054\\TindahanGame\\questions.json') as f:
+            self.questions = json.load(f)['questions']
+
     def load_animations(self, spritesheet):
         return [
             spritesheet.get_sprite(i * TILESIZE, 0, self.width, self.height)
             for i in range(4)
         ]
+        for animation in animations:
+            animation.set_colorkey(BLACK)
+        return animations
     
     def update(self):
         if not self.removed:  # Only update if NPC is not removed
@@ -192,17 +206,17 @@ class Enemy(pygame.sprite.Sprite):
         if self.idle:
             if pygame.time.get_ticks() - self.idle_time > 3000:
                 self.idle = False
-                self.facing = random.choice(['down', 'left', 'right'])
+                self.direction = 'right'
                 self.rect.topleft = self.start_tile
         else:
-            if self.facing == 'up':
-                self.rect.y -= self.speed
-            elif self.facing == 'down':
-                self.rect.y += self.speed
-            elif self.facing == 'left':
-                self.rect.x -= self.speed
-            elif self.facing == 'right':
+            if self.direction == 'right':
                 self.rect.x += self.speed
+                if self.rect.x >= self.start_x + 5 * TILESIZE:
+                    self.direction = 'left'
+            elif self.direction == 'left':
+                self.rect.x -= self.speed
+                if self.rect.x <= self.start_x - 5 * TILESIZE:
+                    self.direction = 'right'
             
             self.movement_loop += self.speed
             if self.movement_loop >= self.max_travel:
@@ -212,22 +226,27 @@ class Enemy(pygame.sprite.Sprite):
                 self.start_tile = (self.rect.x, self.rect.y)
 
             self.rect.x = max(0, min(self.rect.x, WIN_WIDTH - self.width))
-            self.rect.y = max(0, min(self.rect.y, WIN_HEIGHT - self.height))
+            
 
     def animate(self):
         """Fixes animation logic."""
-        if self.idle:
-            animation_list = self.animations["idle"]
-        else:
-            animation_list = self.animations.get(self.facing, self.animations["idle"])
+        now = pygame.time.get_ticks()
+        if now - self.last_update > self.animation_speed:
+            self.last_update = now
+            if self.idle:
+                animation_list = self.animations["idle"]
+            else:
+                animation_list = self.animations.get(self.direction, self.animations["idle"])
 
-        if animation_list:
-            self.image = animation_list[int(self.animation_loop) % len(animation_list)]
-            self.animation_loop += 0.1
+            if animation_list:
+                self.image = animation_list[int(self.animation_loop) % len(animation_list)]
+                self.animation_loop += 1
+                if self.animation_loop >= len(animation_list):
+                    self.animation_loop = 0
 
     def detect_player(self):
         """Detects player within 3 tiles and moves toward them."""
-        if self.removed:  # If NPC is removed, do nothing
+        if self.removed or self.asked_question:  # If NPC is removed or already asked a question, do nothing
             return
 
         player_x, player_y = self.game.player.rect.x, self.game.player.rect.y
@@ -238,27 +257,37 @@ class Enemy(pygame.sprite.Sprite):
             self.move_to_player(player_x, player_y)
 
     def move_to_player(self, player_x, player_y):
-        """Moves NPC to the front of the player smoothly."""
-        if self.removed:  # If NPC is removed, do nothing
+        if self.removed or self.asked_question:
             return
 
         target_x, target_y = self.get_position_in_front_of_player(player_x, player_y)
 
-        dx = self.speed if self.rect.x < target_x else -self.speed
-        dy = self.speed if self.rect.y < target_y else -self.speed
+        distance_x = target_x - self.rect.x
+        distance_y = target_y - self.rect.y
 
-        if self.rect.x != target_x:
-            self.facing = "right" if dx > 0 else "left"
-            self.rect.x += dx
+        if abs(distance_x) > 0:
+            step_x = min(self.speed, abs(distance_x)) * (1 if distance_x > 0 else -1)
+            self.rect.x += step_x
+            self.facing = "right" if step_x > 0 else "left"
 
-        if self.rect.y != target_y:
-            self.facing = "down" if dy > 0 else "up"
-            self.rect.y += dy
+        if abs(distance_y) > 0:
+            step_y = min(self.speed, abs(distance_y)) * (1 if distance_y > 0 else -1)
+            self.rect.y += step_y
+            self.facing = "down" if step_y > 0 else "up"
+
+        if abs(distance_x) < self.speed and abs(distance_y) < self.speed:
+            self.rect.x = target_x
+            self.rect.y = target_y
+
+            # ✅ Define the conversation, question, and choices
+            question_data = random.choice(self.questions)
+            conversation = question_data.get('conversation', "Hello! I have a question for you.")
+            question = question_data['question']
+            choices = question_data['choices']
+            self.game.show_question(conversation, question, self, choices)  # Pass all 4 arguments
+            self.asked_question = True   # Set the flag to indicate the question has been asked
 
         self.animate()
-
-        if self.rect.x == target_x and self.rect.y == target_y:
-            self.game.show_convo(self)
 
     def get_position_in_front_of_player(self, player_x, player_y):
         """Finds the position directly in front of the player."""
@@ -277,25 +306,71 @@ class Enemy(pygame.sprite.Sprite):
         self.removed = True
         self.kill()  # Remove from sprite groups
 
+    def out_of_bounds(self):
+        """Prevents the player from going beyond the game borders."""
+        return (
+            self.rect.left < 0 or
+            self.rect.right > WIN_WIDTH or
+            self.rect.top < 0 or
+            self.rect.bottom > WIN_HEIGHT
+        )
+
+    def return_to_spawn(self):
+        """Returns the enemy to the spawn point and sets it to idle."""
+        self.rect.x = self.start_x
+        self.rect.y = self.start_y
+        self.idle = True
+        self.idle_time = pygame.time.get_ticks()
+        self.asked_question = True  # Set the flag to indicate the enemy has asked a question
+
 
 class Block(pygame.sprite.Sprite):
-    def __init__(self, game, x, y):
-        
+    def __init__(self, game, x, y, obj_type):
         self.game = game
         self._layer = BLOCK_LAYER
         self.groups = self.game.all_sprites, self.game.blocks
         pygame.sprite.Sprite.__init__(self, self.groups)
 
+        # Set position based on tile size
         self.x = x * TILESIZE
         self.y = y * TILESIZE
-        self.width = TILESIZE
-        self.height = TILESIZE
         
-        self.image = self.game.terrain_spritesheet.get_sprite(2, 2, self.width, self.height)
+        # Load the full house image
+        obj_images = {
+            "H": "img/TINDAHAN CHARACTERS/BAHAY.png",
+            "G": "img/TINDAHAN CHARACTERS/BAHAY2.png"
+           
+        }
         
+        self.image = pygame.image.load(obj_images[obj_type]).convert_alpha()
+
+        # Set correct width & height from image
+        self.width, self.height = self.image.get_size()
+
+        # Adjust rect size and position
         self.rect = self.image.get_rect()
-        self.rect.x = self.x
-        self.rect.y = self.y
+        self.rect.topleft = (self.x, self.y)
+
+class Block2(pygame.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.game = game
+        self._layer = BLOCK2_LAYER
+        self.groups = self.game.all_sprites, self.game.blocks
+        pygame.sprite.Sprite.__init__(self, self.groups)
+
+        # Set position based on tile size
+        self.x = x * TILESIZE
+        self.y = y * TILESIZE
+        
+        # Load the full house image
+        self.image = pygame.image.load("img/TINDAHAN CHARACTERS/tree.png").convert_alpha()
+
+        # Set correct width & height from image
+        self.width, self.height = self.image.get_size()
+
+        # Adjust rect size and position
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (self.x, self.y)
 
 class Ground(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -314,6 +389,37 @@ class Ground(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
+
+class Road(pygame.sprite.Sprite):
+    def __init__(self, game, x, y, road_type):
+        self.game = game
+        self._layer = ROAD_LAYER
+        self.groups = self.game.all_sprites
+        pygame.sprite.Sprite.__init__(self, self.groups)
+
+        # Set position based on tile size
+        self.x = x * TILESIZE
+        self.y = y * TILESIZE
+
+        # Load specific road image based on road_type
+        road_images = {
+            1: "img/TINDAHAN CHARACTERS/road1.png",
+            2: "img/TINDAHAN CHARACTERS/road2.png",
+            3: "img/TINDAHAN CHARACTERS/road3.png",
+            4: "img/TINDAHAN CHARACTERS/road4.png",
+            5: "img/TINDAHAN CHARACTERS/road5.png",
+            6: "img/TINDAHAN CHARACTERS/road6.png"
+        }
+        
+        self.image = pygame.image.load(road_images[road_type]).convert_alpha()
+
+        # Set correct width & height from image
+        self.width, self.height = self.image.get_size()
+
+        # Adjust rect size and position
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (self.x, self.y)
+
 
 class Button:
     def __init__(self, x, y, width, height, fg, bg, content, fontsize):
@@ -398,20 +504,20 @@ class Attack(pygame.sprite.Sprite):
         self.collide()
 
     def collide(self):
-        hits = pygame.sprite.spritecollide(self, self.game.enemies, True)
+        hits = pygame.sprite.spritecollide(self, self.game.npcs, True)
 
     def animate(self):
         direction = self.game.player.facing
 
         if direction == 'up':
             self.image = self.up_animations[math.floor(self.animation_loop)]
-            self.animation_loop += 0.5
+            self.animation_loop += 0.05
             if self.animation_loop >= 5:
                 self.kill()
 
         if direction == 'down':
             self.image = self.down_animations[math.floor(self.animation_loop)]
-            self.animation_loop += 0.5
+            self.animation_loop += 0.05
             if self.animation_loop >= 5:
                 self.kill()
 
@@ -426,3 +532,27 @@ class Attack(pygame.sprite.Sprite):
             self.animation_loop += 0.5
             if self.animation_loop >= 5:
                 self.kill()
+
+class Camera:
+    def __init__(self, width, height):
+        self.camera = pygame.Rect(0, 0, width, height)
+        self.width = width
+        self.height = height
+
+    def apply(self, entity):
+        """Moves entities based on the camera's offset."""
+        return entity.rect.move(self.camera.topleft)
+
+    def update(self, target):
+        """Centers the camera on the player but keeps within the map bounds."""
+        x = -target.rect.x + CAM_WIDTH // 2
+        y = -target.rect.y + CAM_HEIGHT // 2
+
+        # Keep the camera within map boundaries
+        x = min(0, x)  # Left boundary
+        x = max(-(self.width - CAM_WIDTH), x)  # Right boundary
+        y = min(0, y)  # Top boundary
+        y = max(-(self.height - CAM_HEIGHT), y)  # Bottom boundary
+
+        self.camera = pygame.Rect(x, y, self.width, self.height)
+
