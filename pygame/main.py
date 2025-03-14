@@ -14,7 +14,7 @@ class Game:
         self.scaled_height = WIN_HEIGHT
         self.screen = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT), pygame.RESIZABLE)
         self.clock = pygame.time.Clock()
-        self.font = pygame.font.Font('arial.ttf', 32)
+        self.font = pygame.font.Font('8-BIT WONDER.TTF', 32)
         self.camera_surface = pygame.Surface((CAM_WIDTH, CAM_HEIGHT))
         self.running = True
         
