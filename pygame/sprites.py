@@ -422,7 +422,7 @@ class Road(pygame.sprite.Sprite):
 
 
 class Button:
-    def __init__(self, x, y, width, height, fg, bg, content, fontsize):
+    def __init__(self, x, y, width, height, fg, bg, content, fontsize, alpha = 255):
         self.font = pygame.font.Font('arial.ttf', fontsize)
         self.content = content
         
@@ -433,9 +433,12 @@ class Button:
 
         self.fg = fg
         self.bg = bg
+        self.alpha = alpha
         
-        self.image = pygame.Surface((self.width, self.height))
-        self.image.fill(self.bg)
+        self.image = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+        
+        self.image.fill(self.bg[0], self.bg[1], self.bg[2], self.alpha)
+        
         self.rect = self.image.get_rect()
 
         self.rect.x = self.x
