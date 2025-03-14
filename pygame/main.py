@@ -242,7 +242,10 @@ class Game:
         title = self.font.render('Tindahan ni Aling Nena', True, BLACK)
         self.title_rect = title.get_rect(x=10, y=10)
 
-        play_button = Button(10, 50, 100, 50, WHITE, BLACK, 'Play', 32)
+        play_button = Button(281, 120, 240, 50,  (255,255,255), (0,0,0), 'Play', 26, 0)
+        options_button = Button(281, 180, 240, 50, (255,255,255), (0,0,0), 'Options', 26, 0)
+        exit_button = Button(281, 250, 240, 50, (255,255,255), (0,0,0), 'Exit', 26, 0)
+        credits_button = Button(281, 310, 240, 50,(255,255,255), (0,0,0), 'Credits', 26, 0)
         
         while intro:
             for event in pygame.event.get():
@@ -259,6 +262,20 @@ class Game:
             self.screen.blit(self.intro_background, (0, 0))
             #self.screen.blit(title, title_rect)
             self.screen.blit(play_button.image, play_button.rect)
+
+            if options_button.is_pressed(mouse_pos, mouse_pressed):
+                pass
+            self.screen.blit(options_button.image, options_button.react)
+
+            if exit_button.is_pressed(mouse_pos, mouse pressed):
+                intro = False
+                self.running = False
+            self.screen.blit(exit_button.image, exits_button.react)
+
+            if credits_button.is_pressed(mouse_pos, ,mouse_pressed):
+                pass
+            self.screen.blit(credits_button.image, credits_button.react)
+            
             self.clock.tick(FPS)
             pygame.display.update()
 
