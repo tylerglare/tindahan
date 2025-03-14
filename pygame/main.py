@@ -242,10 +242,10 @@ class Game:
         title = self.font.render('Tindahan ni Aling Nena', True, BLACK)
         self.title_rect = title.get_rect(x=10, y=10)
 
-        play_button = Button(281, 120, 240, 50,  (255,255,255), (0,0,0), 'Play', 26, 0)
-        options_button = Button(281, 180, 240, 50, (255,255,255), (0,0,0), 'Options', 26, 0)
-        exit_button = Button(281, 250, 240, 50, (255,255,255), (0,0,0), 'Exit', 26, 0)
-        credits_button = Button(281, 310, 240, 50,(255,255,255), (0,0,0), 'Credits', 26, 0)
+        play_button = Button(281, 120, 240, 50,  WHITE, BLACK, 'Play', 26, 0)
+        options_button = Button(281, 180, 240, 50, WHITE, BLACK, 'Options', 26, 0)
+        exit_button = Button(281, 250, 240, 50, WHITE, BLACK, 'Exit', 26, 0)
+        credits_button = Button(281, 310, 240, 50, WHITE, BLACK, 'Credits', 26, 0)
         
         while intro:
             for event in pygame.event.get():
