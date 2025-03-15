@@ -437,7 +437,7 @@ class Button:
         
         self.image = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         
-        self.image.fill(self.bg[0], self.bg[1], self.bg[2], self.alpha)
+        self.image.fill((self.bg[0], self.bg[1], self.bg[2], self.alpha))
         
         self.rect = self.image.get_rect()
 
