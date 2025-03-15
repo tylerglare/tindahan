@@ -184,7 +184,7 @@ class NPC(pygame.sprite.Sprite):
         self.removed = False  # New flag to check if NPC should be deleted
         self.asked_question = False  # Flag to ensure the question is asked only once
         
-        with open('c:\\Users\\This PC\\OneDrive\\Documents\\054\\TindahanGame\\questions.json') as f:
+        with open('questions.json') as f:
             self.questions = json.load(f)['questions']
 
     def load_animations(self, spritesheet):
