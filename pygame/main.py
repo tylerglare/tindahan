@@ -35,7 +35,7 @@ class Game:
         self.npcwalkleft_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/TAMBAY1 WALK LEFT.png')
         self.npcidle_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/TAMBAY1 IDLE RIGHT.png')
         self.attack_spritesheet = Spritesheet('img/attack.png')
-        self.intro_background = pygame.image.load('img/INTROSTORE.png')
+        self.intro_background = pygame.image.load('img/INTROSTORE.jpg')
         self.intro_background = pygame.transform.scale(self.intro_background, (800, 512))
         self.go_background = pygame.image.load('img/gameover.png')
         self.questions = self.load_questions()
@@ -258,23 +258,25 @@ class Game:
 
             if play_button.is_pressed(mouse_pos, mouse_pressed):
                 intro = False
-            
-            self.screen.blit(self.intro_background, (0, 0))
             #self.screen.blit(title, title_rect)
-            self.screen.blit(play_button.image, play_button.rect)
-
+            
             if options_button.is_pressed(mouse_pos, mouse_pressed):
-                pass
-            self.screen.blit(options_button.image, options_button.react)
+                intro = False
 
-            if exit_button.is_pressed(mouse_pos, mouse pressed):
+            if exit_button.is_pressed(mouse_pos, mouse_pressed):
                 intro = False
                 self.running = False
-            self.screen.blit(exit_button.image, exits_button.react)
+                pygame.quit()
+                sys.exit()
+            
+            if credits_button.is_pressed(mouse_pos, mouse_pressed):
+                intro = False
 
-            if credits_button.is_pressed(mouse_pos, ,mouse_pressed):
-                pass
-            self.screen.blit(credits_button.image, credits_button.react)
+            self.screen.blit(self.intro_background, (0, 0))
+            self.screen.blit(play_button.image, play_button.rect)
+            self.screen.blit(options_button.image, options_button.rect)
+            self.screen.blit(exit_button.image, exit_button.reat)
+            self.screen.blit(credits_button.image, credits_button.rect)
             
             self.clock.tick(FPS)
             pygame.display.update()
