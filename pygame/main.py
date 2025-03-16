@@ -4,8 +4,6 @@ from config import *
 import sys
 import json
 
-
-
 class Game:
     def __init__(self):
         pygame.init()
@@ -14,7 +12,7 @@ class Game:
         self.scaled_height = WIN_HEIGHT
         self.screen = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT), pygame.RESIZABLE)
         self.clock = pygame.time.Clock()
-        self.font = pygame.font.Font('8-BIT WONDER.TTF', 32)
+        self.font = pygame.font.Font('PressStart2P-Regular.ttf', 32)
         self.camera_surface = pygame.Surface((CAM_WIDTH, CAM_HEIGHT))
         self.running = True
         
@@ -34,8 +32,11 @@ class Game:
         self.npcwalkright_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/TAMBAY1 WALK RIGHT.png')
         self.npcwalkleft_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/TAMBAY1 WALK LEFT.png')
         self.npcidle_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/TAMBAY1 IDLE RIGHT.png')
+        self.npc1walkright_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/BATA1 WALK RIGHT.png')
+        self.npcw1alkleft_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/BATA1 WALK LEFT.png')
+        self.npc1idle_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/BATA1 IDLE RIGHT.png')
         self.attack_spritesheet = Spritesheet('img/attack.png')
-        self.intro_background = pygame.image.load('img/INTROSTORE.jpg')
+        self.intro_background = pygame.image.load('img/MENUSTORE.png')
         self.intro_background = pygame.transform.scale(self.intro_background, (800, 512))
         self.go_background = pygame.image.load('img/gameover.png')
         self.questions = self.load_questions()
@@ -43,7 +44,7 @@ class Game:
     def load_questions(self):
         with open('questions.json', 'r') as file:
             data = json.load(file)
-        return data['questions']
+        return data
 
     def createTilemap(self):
         for i, row in enumerate(tilemap):
@@ -58,9 +59,16 @@ class Game:
                 if column in ['1', '2', '3', '4', '5', '6']:
                     Road(self, j, i, int(column)) 
                 if column == "N":
-                    NPC(self, j, i)
+                    NPC(self, j, i, name="Tambay", difficulty="easy")
+                if column == "A":
+                    NPC(self, j, i, name="Tambay", difficulty="average")  # Average NPC
+                if column == "K":
+                    NPC(self, j, i, name="Tambay", difficulty="hard")  # Hard NPC
+                if column == "B":
+                    NPC(self, j, i, name="Bata", difficulty="easy")  # Bata NPC
                 if column == 'P':
                     self.player = Player(self, j, i)
+                
 
     def new(self):
         #a new game starts
@@ -89,9 +97,7 @@ class Game:
                 self.screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
                 self.scaled_width = event.w
                 self.scaled_height = event.h
- 
-            
-            
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     if self.player.facing == 'up':
@@ -102,11 +108,11 @@ class Game:
                         Attack(self, self.player.rect.x - TILESIZE, self.player.rect.y)
                     if self.player.facing == 'right':
                         Attack(self, self.player.rect.x + TILESIZE, self.player.rect.y)
-                    if event.key == pygame.K_f:  # Toggle fullscreen
-                        self.toggle_fullscreen()
-                    if event.key == pygame.K_q:  # Show random question
-                        question_data = self.get_random_question()
-                        self.show_question(question_data['question'], None, question_data['choices'])
+                if event.key == pygame.K_f:  # Toggle fullscreen
+                    self.toggle_fullscreen()
+                if event.key == pygame.K_q:  # Show random question
+                    question_data = self.get_random_question()
+                    self.show_question(question_data['conversation'], question_data['question'], None, question_data['choices'], question_data['correct_answer'])
 
     def toggle_fullscreen(self):
         self.fullscreen = not self.fullscreen
@@ -115,9 +121,9 @@ class Game:
         else:
             self.screen = pygame.display.set_mode((self.scaled_width, self.scaled_height), pygame.RESIZABLE)
 
-    def show_question(self, conversation, question, npc, choices):
+    def show_question(self, conversation, question, npc, choices, correct_answer):
         question_box = pygame.Rect(WIN_WIDTH // 4, WIN_HEIGHT // 4, WIN_WIDTH // 2, 100)
-        font = pygame.font.Font(None, 24)
+        font = pygame.font.Font(Font, 15)
         text = font.render(conversation, True, WHITE)
         text_rect = text.get_rect(center=question_box.center)
         
@@ -167,9 +173,11 @@ class Game:
                         for button, choice in buttons:
                             if button.collidepoint(event.pos):
                                 print(f"Player chose: {choice}")
-                                if choice == "Yes":
-                                    question_data = self.get_random_question()
-                                    self.show_question(question_data['question'], npc, question_data['choices'])
+                                if choice == correct_answer:
+                                    self.player.coins += 1  # Add coin for correct answer
+                                else:
+                                    self.player.coins -= 1  # Subtract coin for incorrect answer
+                                print(f"Coins: {self.player.coins}")  # Debug print
                                 if npc:
                                     npc.return_to_spawn()  # Call the return_to_spawn method on the NPC
                                 running = False
@@ -186,7 +194,7 @@ class Game:
             
 
     def draw(self):
-    # Clear camera surface
+        # Clear camera surface
         self.camera_surface.fill(BLACK)
 
         # Draw sprites to the camera surface
@@ -199,8 +207,14 @@ class Game:
         # Blit the scaled surface to the screen
         self.screen.blit(scaled_surface, (0, 0))
 
+        # Display the coin count
+        self.display_coin_count()
+
         pygame.display.update()
-  
+        
+    def display_coin_count(self):
+        coin_text = self.font.render(f'Coins: {self.player.coins}', True, WHITE)
+        self.screen.blit(coin_text, (1, 1))
 
     def main(self):
         #game loop
@@ -275,12 +289,11 @@ class Game:
             self.screen.blit(self.intro_background, (0, 0))
             self.screen.blit(play_button.image, play_button.rect)
             self.screen.blit(options_button.image, options_button.rect)
-            self.screen.blit(exit_button.image, exit_button.rect)
+            self.screen.blit(exit_button.image, exit_button.rect)  # Fixed typo here
             self.screen.blit(credits_button.image, credits_button.rect)
             
             self.clock.tick(FPS)
             pygame.display.update()
-
 
 g = Game()
 g.intro_screen()
