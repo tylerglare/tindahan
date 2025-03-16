@@ -275,7 +275,7 @@ class Game:
             self.screen.blit(self.intro_background, (0, 0))
             self.screen.blit(play_button.image, play_button.rect)
             self.screen.blit(options_button.image, options_button.rect)
-            self.screen.blit(exit_button.image, exit_button.reat)
+            self.screen.blit(exit_button.image, exit_button.rect)
             self.screen.blit(credits_button.image, credits_button.rect)
             
             self.clock.tick(FPS)
