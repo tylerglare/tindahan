@@ -1,16 +1,44 @@
 {
-    "questions": [
+    "easy": [
         {
-            "conversation": "Hello! I have a question for you."
+            "conversation": "Hello, can you help me with math?",
+            "question": "What is 2 + 2?",
+            "choices": ["3", "4", "5"],
+            "correct_answer": "4"
         },
         {
-            "question": "What is your favorite color?",
-            "choices": ["Red", "Blue", "Green"]
+            "conversation": "I always get confused with geography, can you help me?",
+            "question": "What is the capital of France?",
+            "choices": ["Berlin", "Madrid", "Paris"],
+            "correct_answer": "Paris"
+        }
+    ],
+    "average": [
+        {
+            "conversation": "I am not good at history, can you help me?",
+            "question": "Who was the first president of the United States?",
+            "choices": ["George Washington", "Thomas Jefferson", "John Adams"],
+            "correct_answer": "George Washington"
         },
         {
-          
-            "question": "Which path will you take?",
-            "choices": ["Left", "Right", "Straight"]
+            "conversation": "Can you help me with science?",
+            "question": "What is the chemical symbol for water?",
+            "choices": ["H2O", "O2", "CO2"],
+            "correct_answer": "H2O"
+        }
+    ],
+    "hard": [
+        {
+            "conversation": "I am struggling with physics, can you help me?",
+            "question": "What is the speed of light in a vacuum?",
+            "choices": ["300,000 km/s", "150,000 km/s", "450,000 km/s"],
+            "correct_answer": "300,000 km/s"
+        },
+        {
+            "conversation": "I need help with advanced math, can you assist?",
+            "question": "What is the integral of x^2?",
+            "choices": ["x^3/3 + C", "x^2/2 + C", "2x + C"],
+            "correct_answer": "x^3/3 + C"
         }
     ]
 }
