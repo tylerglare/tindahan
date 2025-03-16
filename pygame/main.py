@@ -33,7 +33,7 @@ class Game:
         self.npcwalkleft_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/TAMBAY1 WALK LEFT.png')
         self.npcidle_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/TAMBAY1 IDLE RIGHT.png')
         self.npc1walkright_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/BATA1 WALK RIGHT.png')
-        self.npcw1alkleft_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/BATA1 WALK LEFT.png')
+        self.npc1walkleft_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/BATA1 WALK LEFT.png') #corrected a typo
         self.npc1idle_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/BATA1 IDLE RIGHT.png')
         self.attack_spritesheet = Spritesheet('img/attack.png')
         self.intro_background = pygame.image.load('img/MENUSTORE.png')
