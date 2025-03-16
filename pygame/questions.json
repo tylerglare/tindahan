@@ -1,44 +1,188 @@
 {
     "easy": [
         {
-            "conversation": "Hello, can you help me with math?",
-            "question": "What is 2 + 2?",
-            "choices": ["3", "4", "5"],
-            "correct_answer": "4"
+            "conversation": "Hello, do you know geography?",
+            "question": "How many continents are there in the world?",
+            "choices": ["Seven", "4", "5"],
+            "correct_answer": "Seven"
         },
         {
-            "conversation": "I always get confused with geography, can you help me?",
-            "question": "What is the capital of France?",
-            "choices": ["Berlin", "Madrid", "Paris"],
-            "correct_answer": "Paris"
+            "conversation": "Can you help me with astronomy?",
+            "question": "What is the largest planet in our solar system?",
+            "choices": ["Berlin", "Jupiter", "Paris"],
+            "correct_answer": "Jupiter"
+        },
+        {
+            "conversation": "Are you good with shapes?",
+            "question": "Which shape has four equal sides?",
+            "choices": ["Nucleus", "Mitochondria", "Square"],
+            "correct_answer": "Square"
+        },
+        {
+            "conversation": "Do you know anything about electricity?",
+            "question": "What is the unit of electrical resistance?",
+            "choices": ["Ohm (Ω)", "Thomas Jefferson", "John Adams"],
+            "correct_answer": "Ohm (Ω)"
+        },
+        {
+            "conversation": "Guess the acronym!?",
+            "question": "What does LED stand for?",
+            "choices": ["H2O", "Light Emitting Diode", "CO2"],
+            "correct_answer": "Light Emitting Diode"
+        },
+        {
+            "conversation": "Hey! I got a question for you.",
+            "question": "Which metal is commonly used in electrical wiring?",
+            "choices": ["George Washington", "Thomas Jefferson", "Copper"],
+            "correct_answer": "Copper"
+        },
+        {
+            "conversation": "Can you answer my question?",
+            "question": "What tool is used to measure voltage?",
+            "choices": ["Voltmeter", "Thomas Jefferson", "Copper"],
+            "correct_answer": "Voltmeter"
+        },
+        {
+            "conversation": "Who got the power? Answer this, quick!",
+            "question": "What is the SI unit of power?",
+            "choices": ["George Washington", "Watt (W)", "Copper"],
+            "correct_answer": "Copper"
+        },
+        {
+            "conversation": "Wanna play? Answer my question!",
+            "question": "What type of engineer designs computer software and systems?",
+            "choices": ["George Washington", "Thomas Jefferson", "Software Engineer"],
+            "correct_answer": "Software Engineer"
+        },
+        {
+            "conversation": "Hey! What do you know about liquids?",
+            "question": "Which material is known as the universal solvent?",
+            "choices": ["Water", "Thomas Jefferson", "Copper"],
+            "correct_answer": "Copper"
         }
     ],
     "average": [
         {
-            "conversation": "I am not good at history, can you help me?",
-            "question": "Who was the first president of the United States?",
-            "choices": ["George Washington", "Thomas Jefferson", "John Adams"],
-            "correct_answer": "George Washington"
+            "conversation": "Hey! Quick question for you.",
+            "question": "The current flowing through a conductor between two points is directly proportional to the voltage across the two points, provided the temperature remains constant.",
+            "choices": ["Ohms Law", "Thomas Jefferson", "John Adams"],
+            "correct_answer": "Ohms Law"
         },
         {
-            "conversation": "Can you help me with science?",
-            "question": "What is the chemical symbol for water?",
-            "choices": ["H2O", "O2", "CO2"],
-            "correct_answer": "H2O"
+            "conversation": "I'm not computer literate. I hope you are.",
+            "question": "Identify the programming language commonly used for web development.",
+            "choices": ["H2O", "HTML (Hypertext Markup Language)", "CO2"],
+            "correct_answer": "HTML (Hypertext Markup Language)"
+        },
+        {
+            "conversation": "So, I wanna ask you something. Ready?",
+            "question": "Identify the component that controls the flow of current in one direction only.",
+            "choices": ["Ohms Law", "Thomas Jefferson", "Diode"],
+            "correct_answer": "Diode"
+        },
+        {
+            "conversation": "I got electrocuted yesterday. Dumb mistake! Anyway, I have a question for you.",
+            "question": "Identify the type of current that changes direction periodically.",
+            "choices": ["Alternating Current (AC)", "Thomas Jefferson", "John Adams"],
+            "correct_answer": "Alternating Current (AC)"
+        },
+        {
+            "conversation": "You a genius? Answer this!",
+            "question": "Identify the device that converts AC voltage to DC voltage.",
+            "choices": ["Ohms Law", "Rectifier", "John Adams"],
+            "correct_answer": "Rectifier"
+        },
+        {
+            "conversation": "It's so hot right now. Wanna go swimming?",
+            "question": "What is the largest ocean on Earth?",
+            "choices": ["Ohms Law", "Thomas Jefferson", "Pacific Ocean"],
+            "correct_answer": "Pacific Ocean"
+        },
+        {
+            "conversation": "Now, this is a CLASSIC. Perhaps you know this one?",
+            "question": "Who wrote the play Romeo and Juliet?",
+            "choices": ["William Shakespeare", "Thomas Jefferson", "John Adams"],
+            "correct_answer": "William Shakespeare"
+        },
+        {
+            "conversation": "Okay, so, quick question!",
+            "question": "What is the chemical symbol for gold?",
+            "choices": ["Ohms Law", "Au", "John Adams"],
+            "correct_answer": "Ohms Law"
+        },
+        {
+            "conversation": "Let's do math!",
+            "question": "What is the smallest prime number?",
+            "choices": ["Ohms Law", "Thomas Jefferson", "2"],
+            "correct_answer": "Ohms Law"
+        },
+        {
+            "conversation": "I'm hungry. Let's talk about food!",
+            "question": "Which country is famous for inventing pizza?",
+            "choices": ["Italy", "Thomas Jefferson", "John Adams"],
+            "correct_answer": "Italy"
         }
     ],
     "hard": [
         {
-            "conversation": "I am struggling with physics, can you help me?",
-            "question": "What is the speed of light in a vacuum?",
-            "choices": ["300,000 km/s", "150,000 km/s", "450,000 km/s"],
-            "correct_answer": "300,000 km/s"
+            "conversation": "Let's talk about metals!",
+            "question": "What is the only metal that is liquid at room temperature?",
+            "choices": ["Mercury", "150,000 km/s", "450,000 km/s"],
+            "correct_answer": "Mercury"
         },
         {
-            "conversation": "I need help with advanced math, can you assist?",
-            "question": "What is the integral of x^2?",
-            "choices": ["x^3/3 + C", "x^2/2 + C", "2x + C"],
-            "correct_answer": "x^3/3 + C"
+            "conversation": "Have you ever been abroad?",
+            "question": "What is the smallest country in the world by land area?",
+            "choices": ["x^3/3 + C", "Vatican City", "2x + C"],
+            "correct_answer": "Vatican City"
+        },
+        {
+            "conversation": "I have a programming question for you.",
+            "question": "Which programming language is known for its use in developing embedded systems?",
+            "choices": ["300,000 km/s", "150,000 km/s", "C"],
+            "correct_answer": "C"
+        },
+        {
+            "conversation": "Do you know anything about cybersecurity?",
+            "question": "Which type of attack involves intercepting communication between two parties?",
+            "choices": ["Man-in-the-Middle (MitM) attack", "x^2/2 + C", "2x + C"],
+            "correct_answer": "Man-in-the-Middle (MitM) attack"
+        },
+        {
+            "conversation": "I know nothing about computers. How about you?",
+            "question": "Which type of memory is used for BIOS storage?",
+            "choices": ["300,000 km/s", "EEPROM", "450,000 km/s"],
+            "correct_answer": "EEPROM"
+        },
+        {
+            "conversation": "I'm really bad at technology. Can you help me?",
+            "question": "Identifies the hardware component responsible for controlling data flow between the CPU and other devices.",
+            "choices": ["x^3/3 + C", "x^2/2 + C", "Control Unit"],
+            "correct_answer": "Control Unit"
+        },
+        {
+            "conversation": "You have internet at home? Got a question for you.",
+            "question": "Identifies the network device that connects multiple networks and routes data packets. ",
+            "choices": ["Router", "150,000 km/s", "450,000 km/s"],
+            "correct_answer": "Router"
+        },
+        {
+            "conversation": "Hey! Quick question for you.",
+            "question": "Identifies the component that stores frequently used data to reduce memory access time.",
+            "choices": ["x^3/3 + C", "Cache Memory", "2x + C"],
+            "correct_answer": "Cache Memory"
+        },
+        {
+            "conversation": "Do you have a PC? I have a question for you.",
+            "question": "Identifies the hardware responsible for graphics processing and rendering.",
+            "choices": ["300,000 km/s", "150,000 km/s", "GPU"],
+            "correct_answer": "GPU"
+        },
+        {
+            "conversation": "Let's talk about Physics!",
+            "question": "Who discovered the law of universal gravitation?",
+            "choices": ["Isaac Newton", "x^2/2 + C", "2x + C"],
+            "correct_answer": "Isaac Newton"
         }
     ]
 }
