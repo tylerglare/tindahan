@@ -33,6 +33,9 @@ class Player(pygame.sprite.Sprite):
         self.facing = "down"
         self.moving = False
 
+        # Coins
+        self.coins = 20
+
         # Walking Animations
         self.down_animations = [self.game.mainwalkright_spritesheet.get_sprite(i * TILESIZE, 0, TILESIZE, TILESIZE) for i in range(4)]
         self.up_animations = [self.game.mainwalkright_spritesheet.get_sprite(i * TILESIZE, 0, TILESIZE, TILESIZE) for i in range(4)]
@@ -140,9 +143,24 @@ class Player(pygame.sprite.Sprite):
 
 
 class NPC(pygame.sprite.Sprite):
-    def __init__(self, game, x, y, name="Tambay"):
+    NPC_SPRITESHEETS = {
+        "Tambay": {
+            "walk_right": 'img/TINDAHAN CHARACTERS/TAMBAY1 WALK RIGHT.png',
+            "walk_left": 'img/TINDAHAN CHARACTERS/TAMBAY1 WALK LEFT.png',
+            "idle": 'img/TINDAHAN CHARACTERS/TAMBAY1 IDLE RIGHT.png'
+        },
+        "Bata": {
+            "walk_right": 'img/TINDAHAN CHARACTERS/BATA1 WALK RIGHT.png',
+            "walk_left": 'img/TINDAHAN CHARACTERS/BATA1 WALK LEFT.png',
+            "idle": 'img/TINDAHAN CHARACTERS/BATA1 IDLE RIGHT.png'
+        }
+        # Add more NPC types here
+    }
+
+    def __init__(self, game, x, y, name="Tambay", difficulty="easy"):
         self.game = game
         self.name = name
+        self.difficulty = difficulty  # Add difficulty level
         self._layer = NPC_LAYER
         self.groups = self.game.all_sprites, self.game.npcs
         pygame.sprite.Sprite.__init__(self, self.groups)
@@ -153,6 +171,12 @@ class NPC(pygame.sprite.Sprite):
         self.height = TILESIZE
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
+        # Load the appropriate spritesheet based on the NPC type
+        spritesheet = self.NPC_SPRITESHEETS[name]
+        self.walk_right_spritesheet = Spritesheet(spritesheet["walk_right"])
+        self.walk_left_spritesheet = Spritesheet(spritesheet["walk_left"])
+        self.idle_spritesheet = Spritesheet(spritesheet["idle"])
+
         # Movement
         self.movement_loop = 0
         self.max_travel = 5 * TILESIZE
@@ -162,38 +186,35 @@ class NPC(pygame.sprite.Sprite):
         self.start_tile = (self.rect.x, self.rect.y)
         self.start_x = x * TILESIZE
         self.start_y = y * TILESIZE
-        self.direction = 'right'
+        self.direction = random.choice(['left', 'right'])  # Randomize initial direction
 
         # Direction
-        self.facing = random.choice(['left', 'right'])
+        self.facing = self.direction
         self.animation_loop = 0
         self.last_update = pygame.time.get_ticks()
         self.animation_speed = 150  # Match player animation speed
         self.animations = {
-            "up": self.load_animations(self.game.npcwalkright_spritesheet),
-            "down": self.load_animations(self.game.npcwalkright_spritesheet),
-            "left": self.load_animations(self.game.npcwalkleft_spritesheet),
-            "right": self.load_animations(self.game.npcwalkright_spritesheet),
-            "idle": self.load_animations(self.game.npcidle_spritesheet)
+            "up": self.load_animations(self.walk_right_spritesheet),
+            "down": self.load_animations(self.walk_right_spritesheet),
+            "left": self.load_animations(self.walk_left_spritesheet),
+            "right": self.load_animations(self.walk_right_spritesheet),
+            "idle": self.load_animations(self.idle_spritesheet)
         }
 
         self.image = self.animations[self.facing][0]
-        self.image.set_colorkey(BLACK)
 
         self.name = name  # NPC name for dialogue
         self.removed = False  # New flag to check if NPC should be deleted
         self.asked_question = False  # Flag to ensure the question is asked only once
         
-        with open('questions.json') as f:
-            self.questions = json.load(f)['questions']
+        with open('c:\\Users\\This PC\\OneDrive\\Documents\\054\\TindahanGame\\questions.json') as f:
+            self.questions = json.load(f)
 
     def load_animations(self, spritesheet):
-        return [
+        animations = [
             spritesheet.get_sprite(i * TILESIZE, 0, self.width, self.height)
             for i in range(4)
         ]
-        for animation in animations:
-            animation.set_colorkey(BLACK)
         return animations
     
     def update(self):
@@ -206,18 +227,32 @@ class NPC(pygame.sprite.Sprite):
         if self.idle:
             if pygame.time.get_ticks() - self.idle_time > 3000:
                 self.idle = False
-                self.direction = 'right'
+                self.direction = random.choice(['left', 'right', 'up', 'down'])  # Randomize direction after idle
                 self.rect.topleft = self.start_tile
         else:
+            old_x, old_y = self.rect.x, self.rect.y
+
             if self.direction == 'right':
                 self.rect.x += self.speed
-                if self.rect.x >= self.start_x + 5 * TILESIZE:
-                    self.direction = 'left'
+                if self.rect.x >= self.start_x + self.max_travel or self.collide_with_blocks('x'):
+                    self.rect.x = old_x
+                    self.direction = random.choice(['left', 'up', 'down'])
             elif self.direction == 'left':
                 self.rect.x -= self.speed
-                if self.rect.x <= self.start_x - 5 * TILESIZE:
-                    self.direction = 'right'
-            
+                if self.rect.x <= self.start_x - self.max_travel or self.collide_with_blocks('x'):
+                    self.rect.x = old_x
+                    self.direction = random.choice(['right', 'up', 'down'])
+            elif self.direction == 'up':
+                self.rect.y -= self.speed
+                if self.rect.y <= self.start_y - self.max_travel or self.collide_with_blocks('y'):
+                    self.rect.y = old_y
+                    self.direction = random.choice(['down', 'left', 'right'])
+            elif self.direction == 'down':
+                self.rect.y += self.speed
+                if self.rect.y >= self.start_y + self.max_travel or self.collide_with_blocks('y'):
+                    self.rect.y = old_y
+                    self.direction = random.choice(['up', 'left', 'right'])
+
             self.movement_loop += self.speed
             if self.movement_loop >= self.max_travel:
                 self.idle = True
@@ -226,7 +261,18 @@ class NPC(pygame.sprite.Sprite):
                 self.start_tile = (self.rect.x, self.rect.y)
 
             self.rect.x = max(0, min(self.rect.x, WIN_WIDTH - self.width))
-            
+            self.rect.y = max(0, min(self.rect.y, WIN_HEIGHT - self.height))
+
+    def collide_with_blocks(self, direction):
+        if direction == 'x':
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, False)
+            if hits:
+                return True
+        if direction == 'y':
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, False)
+            if hits:
+                return True
+        return False
 
     def animate(self):
         """Fixes animation logic."""
@@ -279,13 +325,20 @@ class NPC(pygame.sprite.Sprite):
             self.rect.x = target_x
             self.rect.y = target_y
 
-            # ✅ Define the conversation, question, and choices
-            question_data = random.choice(self.questions)
+            # Get a random question based on difficulty
+            if self.difficulty == "easy":
+                question_data = random.choice(self.questions['easy'])
+            elif self.difficulty == "average":
+                question_data = random.choice(self.questions['average'])
+            elif self.difficulty == "hard":
+                question_data = random.choice(self.questions['hard'])
+
             conversation = question_data.get('conversation', "Hello! I have a question for you.")
             question = question_data['question']
             choices = question_data['choices']
-            self.game.show_question(conversation, question, self, choices)  # Pass all 4 arguments
-            self.asked_question = True   # Set the flag to indicate the question has been asked
+            correct_answer = question_data['correct_answer']
+            self.game.show_question(conversation, question, self, choices, correct_answer)  # Pass all 5 arguments
+            self.asked_question = True  # Set the flag to indicate the question has been asked
 
         self.animate()
 
@@ -323,7 +376,6 @@ class NPC(pygame.sprite.Sprite):
         self.idle_time = pygame.time.get_ticks()
         self.asked_question = True  # Set the flag to indicate the enemy has asked a question
 
-
 class Block(pygame.sprite.Sprite):
     def __init__(self, game, x, y, obj_type):
         self.game = game
@@ -341,6 +393,16 @@ class Block(pygame.sprite.Sprite):
             "G": "img/TINDAHAN CHARACTERS/BAHAY2.png"
            
         }
+        
+        self.image = pygame.image.load(obj_images[obj_type]).convert_alpha()
+
+        # Set correct width & height from image
+        self.width, self.height = self.image.get_size()
+
+        # Adjust rect size and position
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (self.x, self.y)
+        
         
         self.image = pygame.image.load(obj_images[obj_type]).convert_alpha()
 
@@ -422,8 +484,8 @@ class Road(pygame.sprite.Sprite):
 
 
 class Button:
-    def __init__(self, x, y, width, height, fg, bg, content, fontsize, alpha = 255):
-        self.font = pygame.font.Font('8-BIT WONDER.TTF', fontsize)
+    def __init__(self, x, y, width, height, fg, bg, content, fontsize, alpha=255):
+        self.font = pygame.font.Font('PressStart2P-Regular.ttf', fontsize)
         self.content = content
         
         self.x = x
@@ -437,7 +499,8 @@ class Button:
         
         self.image = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         
-        self.image.fill((self.bg[0], self.bg[1], self.bg[2], self.alpha))
+        # Correctly handle the color and alpha values
+        self.image.fill((*self.bg, self.alpha))
         
         self.rect = self.image.get_rect()
 
