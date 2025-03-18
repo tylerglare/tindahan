@@ -53,6 +53,7 @@ class Player(pygame.sprite.Sprite):
         self.animation_speed = 150
 
     def update(self):
+        # Handle movement logic for Aling Nena NPC
         self.movement()
         self.animate()
 
@@ -207,7 +208,9 @@ class NPC(pygame.sprite.Sprite):
         self.removed = False  # New flag to check if NPC should be deleted
         self.asked_question = False  # Flag to ensure the question is asked only once
         
-        with open('c:\\Users\\This PC\\OneDrive\\Documents\\054\\TindahanGame\\questions.json') as f:
+# Load questions from JSON file
+        # Replace this in the NPC class:
+        with open('questions.json') as f:
             self.questions = json.load(f)
 
     def load_animations(self, spritesheet):
@@ -391,7 +394,6 @@ class Block(pygame.sprite.Sprite):
         obj_images = {
             "H": "img/TINDAHAN CHARACTERS/BAHAY.png",
             "G": "img/TINDAHAN CHARACTERS/BAHAY2.png"
-           
         }
         
         self.image = pygame.image.load(obj_images[obj_type]).convert_alpha()
@@ -402,16 +404,8 @@ class Block(pygame.sprite.Sprite):
         # Adjust rect size and position
         self.rect = self.image.get_rect()
         self.rect.topleft = (self.x, self.y)
-        
-        
-        self.image = pygame.image.load(obj_images[obj_type]).convert_alpha()
 
-        # Set correct width & height from image
-        self.width, self.height = self.image.get_size()
 
-        # Adjust rect size and position
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (self.x, self.y)
 
 class Block2(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -498,34 +492,28 @@ class Button:
         self.alpha = alpha
         
         self.image = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        
-        # Correctly handle the color and alpha values
-        self.image.fill((*self.bg, self.alpha))
-        
         self.rect = self.image.get_rect()
-
         self.rect.x = self.x
         self.rect.y = self.y
 
-        self.update_text(self.content)
-        
+        self.update_text(self.content)  # Ensure text is updated during initialization
+
     def update_text(self, new_content):
         self.content = new_content
-        self.text = self.font.render(self.content,True,self.fg)
-        self.text_rect = self.text.get_rect(center=(self.width/2,self.height/2))
-        self.image.fill((*self.bg,self.alpha))
+        self.text = self.font.render(self.content, True, self.fg)
+        self.text_rect = self.text.get_rect(center=(self.width / 2, self.height / 2))
+        self.image.fill((*self.bg, self.alpha))
         self.image.blit(self.text, self.text_rect)
 
     def is_pressed(self, pos, pressed):
         if self.rect.collidepoint(pos):
             if pressed[0]:
                 return True
-            return False
         return False
 
-    def draw(self,  screen):
-      screen.blit(self.image, self.rect)
-    
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
+
 class Attack(pygame.sprite.Sprite):
 
     def __init__(self, game, x, y):
@@ -629,4 +617,226 @@ class Camera:
         y = max(-(self.height - CAM_HEIGHT), y)  # Bottom boundary
 
         self.camera = pygame.Rect(x, y, self.width, self.height)
+
+class AlingNena(pygame.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.game = game
+        self._layer = NPC_LAYER
+        self.groups = self.game.all_sprites, self.game.npcs
+        pygame.sprite.Sprite.__init__(self, self.groups)
+
+        self.x = x * TILESIZE
+        self.y = y * TILESIZE
+        self.width = TILESIZE
+        self.height = TILESIZE
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+        # Load spritesheets
+        self.left_spritesheet = self.game.alingnenaleft_spritesheet
+        self.right_spritesheet = self.game.alingnenaright_spritesheet
+
+        # Movement
+        self.movement_loop = 0
+        self.idle = False
+        self.idle_time = 0
+        self.speed = NPC_SPEED
+        self.start_tile = (self.rect.x, self.rect.y)
+        self.start_x = x * TILESIZE
+        self.start_y = y * TILESIZE
+        self.direction = 'right'  # Start facing right
+
+        # Direction
+        self.facing = self.direction
+        self.animation_loop = 0
+        self.last_update = pygame.time.get_ticks()
+        self.animation_speed = 200  # Slower animation
+        
+        # Load animations
+        self.animations = {
+            "left": self.load_animations(self.left_spritesheet),
+            "right": self.load_animations(self.right_spritesheet),
+            "idle": self.load_animations(self.right_spritesheet)  # Use right as idle
+        }
+
+        self.image = self.animations[self.facing][0]
+        self.name = "Aling Nena"
+        self.removed = False
+        self.asked_question = False
+        
+        # Special dialogue for Aling Nena
+        self.dialogue = [
+            "Welcome to my store!",
+            "What can I get for you today?",
+            "We have fresh items just arrived!"
+        ]
+
+    def load_animations(self, spritesheet):
+        animations = [
+            spritesheet.get_sprite(i * TILESIZE, 0, self.width, self.height)
+            for i in range(4)
+        ]
+        return animations
+    
+    def update(self):
+        if not self.removed:
+            #self.movement()
+            self.animate()
+            self.detect_player()
+
+
+    def animate(self):
+        now = pygame.time.get_ticks()
+        if now - self.last_update > self.animation_speed:
+            self.last_update = now
+            if self.idle:
+                animation_list = self.animations["idle"]
+            else:
+                animation_list = self.animations.get(self.direction, self.animations["idle"])
+
+            if animation_list:
+                self.image = animation_list[int(self.animation_loop) % len(animation_list)]
+                self.animation_loop += 1
+                if self.animation_loop >= len(animation_list):
+                    self.animation_loop = 0
+
+    def detect_player(self):
+        if self.removed or self.asked_question:
+            return
+
+        player_x, player_y = self.game.player.rect.x, self.game.player.rect.y
+        distance_x = abs(self.rect.x - player_x)
+        distance_y = abs(self.rect.y - player_y)
+
+        if distance_x + distance_y <= 2 * TILESIZE:  # Shorter detection range
+            # Create a special store question
+            store_question = {
+                "conversation": random.choice(self.dialogue),
+                "question": "Would you like to buy something from my store?",
+                "choices": ["Yes, please!", "No, thank you.", "Just looking around."],
+                "correct_answer": "Yes, please!"
+            }
+            
+            self.game.show_question(
+                store_question["conversation"], 
+                store_question["question"], 
+                self, 
+                store_question["choices"], 
+                store_question["correct_answer"]
+            )
+            self.asked_question = True
+
+
+class Nanay(pygame.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.game = game
+        self._layer = NPC_LAYER
+        self.groups = self.game.all_sprites, self.game.npcs
+        pygame.sprite.Sprite.__init__(self, self.groups)
+
+        self.x = x * TILESIZE
+        self.y = y * TILESIZE
+        self.width = TILESIZE
+        self.height = TILESIZE
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+        # Load spritesheets
+        self.left_spritesheet = self.game.nanayleft_spritesheet
+        self.right_spritesheet = self.game.nanayright_spritesheet
+
+        # Movement
+        self.movement_loop = 0
+        self.max_travel = 4 * TILESIZE
+        self.idle = False
+        self.idle_time = 0
+        self.speed = NPC_SPEED * 0.75  # Slower movement
+        self.start_tile = (self.rect.x, self.rect.y)
+        self.start_x = x * TILESIZE
+        self.start_y = y * TILESIZE
+        self.direction = 'left'
+
+        # Direction
+        self.facing = self.direction
+        self.animation_loop = 0
+        self.last_update = pygame.time.get_ticks()
+        self.animation_speed = 250  # Slower animation
+        
+        # Load animations
+        self.animations = {
+            "left": self.load_animations(self.left_spritesheet),
+            "right": self.load_animations(self.right_spritesheet),
+            "idle": self.load_animations(self.left_spritesheet)  # Use left as idle
+        }
+
+        self.image = self.animations[self.facing][0]
+        self.name = "Nanay"
+        self.removed = False
+        self.asked_question = False
+        
+        # Special dialogue for Nanay
+        self.dialogue = [
+            "Hello, anak! How are you today?",
+            "Have you eaten already?",
+            "Don't forget to do your homework!"
+        ]
+
+    def load_animations(self, spritesheet):
+        animations = [
+            spritesheet.get_sprite(i * TILESIZE, 0, self.width, self.height)
+            for i in range(4)
+        ]
+        return animations
+    
+    def update(self):
+        if not self.removed:
+            self.movement()
+            self.animate()
+            self.detect_player()
+
+    def movement(self):
+        # Nanay moves around more randomly
+        if self.idle:
+            if pygame.time.get_ticks() - self.idle_time > 3000:
+                self.idle = False
+                self.direction = random.choice(['left', 'right'])
+    
+    def animate(self):
+        now = pygame.time.get_ticks()
+        if now - self.last_update > self.animation_speed:
+            self.last_update = now
+            if self.idle:
+                animation_list = self.animations["idle"]
+            else:
+                animation_list = self.animations.get(self.direction, self.animations["idle"])
+
+            if animation_list:
+                self.image = animation_list[int(self.animation_loop) % len(animation_list)]
+                self.animation_loop += 1
+                if self.animation_loop >= len(animation_list):
+                    self.animation_loop = 0
+
+    def detect_player(self):
+        if self.removed or self.asked_question:
+            return
+
+        player_x, player_y = self.game.player.rect.x, self.game.player.rect.y
+        distance_x = abs(self.rect.x - player_x)
+        distance_y = abs(self.rect.y - player_y)
+
+        if distance_x + distance_y <= 3 * TILESIZE:
+            # Create a special nanay question
+            nanay_question = {
+                "conversation": random.choice(self.dialogue),
+                "question": "What would you like for dinner tonight?",
+                "choices": ["Adobo", "Sinigang", "Tinola"],
+                "correct_answer": "Adobo"  # Nanay's favorite
+            }
+            
+            self.game.show_question(
+                nanay_question["conversation"], 
+                nanay_question["question"], 
+                self, 
+                nanay_question["choices"], 
+                nanay_question["correct_answer"]
+            )
+            self.asked_question = True
 
