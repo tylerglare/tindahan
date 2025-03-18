@@ -1,6 +1,7 @@
 import pygame
 from sprites import *
 from config import *
+from pygame import mixer #from pygame library
 import sys
 import json
 
@@ -40,6 +41,14 @@ class Game:
         self.intro_background = pygame.transform.scale(self.intro_background, (800, 512))
         self.go_background = pygame.image.load('img/gameover.png')
         self.questions = self.load_questions()
+
+        mixer.music.load('Audio.mp3')
+        mixer.music.play(-1)#0 if one time play, -1 for loop
+        mixer.music.set_volume(1.0)
+        self.is_muted = False
+        self.previous_volume = 1.0
+        self.target_volume = 1.0
+        
 
     def load_questions(self):
         with open('questions.json', 'r') as file:
@@ -294,6 +303,150 @@ class Game:
             
             self.clock.tick(FPS)
             pygame.display.update()
+            
+    def options_screen(self):
+        options = True
+        font = pygame.font.Font('PressStart2P-Regular.ttf',27)
+        title_text = font.render('Options',True,WHITE)
+
+        title_rect = title_text.get_rect()
+        title_rect.centerx = self.screen.get_width()//2
+        title_rect.top = 30
+        
+        self.OCbackground = pygame.image.load('img/Sari.png')
+        self.OCbackground = pygame.transform.scale(self.OCbackground, (800, 512))
+        
+        mute_button = Button(281,280,240, 50, WHITE, BLACK,'Mute',21, 0 )
+        back_button = Button(281, 410, 240, 50 , WHITE, BLACK, 'Back', 27, 0)
+        
+        muted = False
+        previous_volume = mixer.music.get_volume()
+
+        slider_x = 195 #decrease to move left, increase to move right
+        slider_y = 180 #decrease to move up, increase to move down
+        slider_width = 400 #decrease horizontal line,  increase horizontal line
+        slider_height = 5  #decrease to shorten size
+        handle_width = 20 
+        handle_height = 20 
+
+        current_volume = previous_volume
+        slider_handle_x = slider_x + current_volume * slider_width
+
+        dragging_slider = False
+        hitbox_padding = 40 #increase hitbox size 
+
+        while options:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    options = False
+                    self.running = False
+                
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                  if(slider_handle_x-hitbox_padding <= event.pos[0]<= slider_handle_x + handle_width + handle_height and
+                       slider_y - hitbox_padding <= event.pos[1] <= slider_y + slider_height + hitbox_padding):
+                       dragging_slider = True
+                  elif mute_button.rect.collidepoint(event.pos):
+                     if not muted:
+                            previous_volume = current_volume
+                            previous_slider_handle_x = slider_handle_x
+                            mixer.music.set_volume(0.0)
+                            current_volume = 0.0
+                            slider_handle_x = slider_x
+                            mute_button.update_text('Unmute')
+                            muted = True
+                     else:
+                            mixer.music.set_volume(previous_volume)
+                            current_volume = previous_volume
+                            slider_handle_x = previous_slider_handle_x
+                            mute_button.update_text('Mute')
+                            muted = False
+
+                elif event.type == pygame.MOUSEBUTTONUP:
+                    dragging_slider = False
+                elif event.type == pygame.MOUSEMOTION and dragging_slider and not muted:
+                    new_x = max(slider_x,min(slider_x + slider_width - handle_width,event.pos[0] - handle_width//2))
+                    slider_handle_x = new_x
+                    current_volume = (slider_handle_x -slider_x)/(slider_width - handle_height )
+                    mixer.music.set_volume(current_volume)
+
+            mouse_pos = pygame.mouse.get_pos()
+            mouse_pressed = pygame.mouse.get_pressed()
+            
+
+            volume_font = pygame.font.Font('PressStart2P-Regular.ttf',20)
+            self.screen.blit(self.OCbackground, (0,0))
+            volume_text = volume_font.render(f'Volume: {int(current_volume*100)*(not muted)}%',True,WHITE)
+            volume_text_rect = volume_text.get_rect()
+            volume_text_rect.centerx = self.screen.get_width()//2
+            volume_text_rect.top = 210
+         
+            self.screen.blit(title_text, title_rect)
+            mute_button.draw(self.screen)
+            self.screen.blit(back_button.image, back_button.rect)
+            
+            pygame.draw.rect(self.screen,RED,(slider_x,slider_y,slider_width,slider_height))
+
+            pygame.draw.rect(self.screen,WHITE,(slider_handle_x, slider_y - handle_height//2, handle_width, handle_height))
+            
+            self.screen.blit(volume_text, volume_text_rect)
+
+            if back_button.is_pressed(mouse_pos, mouse_pressed):
+                options =False
+            
+            self.clock.tick(FPS)
+            pygame.display.update()
+            
+    def credits_screen(self):
+        credits = True
+        title_font = pygame.font.Font('PressStart2P-Regular.ttf',27)
+        credits_font = pygame.font.Font('PressStart2P-Regular.ttf', 20)
+        title_text = title_font.render('Credits', True, WHITE)
+
+        title_rect = title_text.get_rect()
+        title_rect.centerx = self.screen.get_width()//2
+        title_rect.top = 13
+
+        back_button = Button(281,450,240,50, WHITE, BLACK,'Back', 27, 0)
+
+        credits_text = [
+            'Game by Team Tindahan',
+            'Team Tindahan:',
+            '           Rana Carlos',
+            '           Terrylle Augie Gonatice',
+            '           Ma Rhoabel Sanchez',
+            '           John Dharell Marcos',
+            'Art by Rana Carlos',
+            'Music by Eraserheads',
+            '           Thanks for playing',
+        ]
+
+        while credits:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    credits = False
+                    self.running = False
+
+            mouse_pos = pygame.mouse.get_pos()
+            mouse_pressed = pygame.mouse.get_pressed()
+
+            if back_button.is_pressed(mouse_pos, mouse_pressed):
+                credits = False
+
+            self.screen.fill(BLACK)
+            self.screen.blit(title_text, title_rect)
+
+            y_offset = 60
+
+            for line in credits_text:
+                credits_line = credits_font.render(line, True, WHITE)
+                self.screen.blit(credits_line, (12, y_offset))
+                y_offset += 45
+
+            self.screen.blit(back_button.image, back_button.rect)
+
+            self.clock.tick(FPS)
+            pygame.display.update()
+
 
 g = Game()
 g.intro_screen()
@@ -302,5 +455,6 @@ while g.running:
     g.main()
     g.game_over()
 
+mixer.music.stop()
 pygame.quit()
 sys.exit()
