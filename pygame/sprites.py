@@ -507,8 +507,13 @@ class Button:
         self.rect.x = self.x
         self.rect.y = self.y
 
-        self.text = self.font.render(self.content, True, self.fg)
-        self.text_rect = self.text.get_rect(center=(self.width/2, self.height/2))
+        self.update_text(self.content)
+        
+    def update_text(self, new_content):
+        self.content = new_content
+        self.text = self.font.render(self.content,True,self.fg)
+        self.text_rect = self.text.get_rect(center=(self.width/2,self.height/2))
+        self.image.fill((*self.bg,self.alpha))
         self.image.blit(self.text, self.text_rect)
 
     def is_pressed(self, pos, pressed):
@@ -517,6 +522,9 @@ class Button:
                 return True
             return False
         return False
+
+    def draw(self,  screen):
+      screen.blit(self.image, self.rect)
     
 class Attack(pygame.sprite.Sprite):
 
