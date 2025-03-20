@@ -308,8 +308,17 @@ class Game:
         pygame.display.update()
         
     def display_coin_count(self):
-        coin_text = self.font.render(f'Coins: {self.player.coins}', True, WHITE)
-        self.screen.blit(coin_text, (1, 1))
+        coin_text = self.font.render(f'{self.player.coins}', True, BLACK)
+        
+        # Load coin image
+        coin_icon = pygame.image.load("img/TINDAHAN CHARACTERS/coin.png").convert_alpha()
+        coin_icon = pygame.transform.scale(coin_icon, (48, 48))  # Scale to fit
+
+        # Draw coin icon first
+        self.screen.blit(coin_icon, (720, 5))  # Adjust position as needed
+
+        # Draw coin text next to the icon
+        self.screen.blit(coin_text, (650, 15)) 
 
     def main(self):
         # game loop
