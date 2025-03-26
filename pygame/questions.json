@@ -4,121 +4,661 @@
             "conversation": "Hello, do you know geography?",
             "question": "How many continents are there in the world?",
             "choices": ["Seven", "Four", "Five","Eight"],
-            "correct_answer": "Seven"
+            "correct_answer": "Seven",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Can you help me with astronomy?",
             "question": "What is the largest planet in our solar system?",
             "choices": ["Saturn", "Jupiter", "Earth", "Venus"],
-            "correct_answer": "Jupiter"
+            "correct_answer": "Jupiter",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Are you good with shapes?",
             "question": "Which shape has four equal sides?",
             "choices": ["Triangle", "Rectangle", "Square", "Circle"],
-            "correct_answer": "Square"
+            "correct_answer": "Square",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Do you know anything about electricity?",
             "question": "What is the unit of electrical resistance?",
             "choices": ["Ohm (Ω)", "Farad (F)", "Volt (V)","Watt (W)"],
-            "correct_answer": "Ohm (Ω)"
+            "correct_answer": "Ohm (Ω)",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Guess the acronym!?",
             "question": "What does LED stand for?",
             "choices": ["Low Energy Diode", "Light Emitting Diode", "Light Emission Device","Light Energy Diode"],
-            "correct_answer": "Light Emitting Diode"
+            "correct_answer": "Light Emitting Diode",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Hey! I got a question for you.",
             "question": "Which metal is commonly used in electrical wiring?",
             "choices": ["Iron", "Silicon", "Copper","Germanium"],
-            "correct_answer": "Copper"
+            "correct_answer": "Copper",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Can you answer my question?",
             "question": "What tool is used to measure voltage?",
             "choices": ["Voltmeter", "Multimeter", "Ahmmeter","Barometer"],
-            "correct_answer": "Voltmeter"
+            "correct_answer": "Voltmeter",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Who got the power? Answer this, quick!",
             "question": "What is the SI unit of power?",
             "choices": ["Volt (V)", "Watt (W)", "Ohm (Ω)","Farad(F)"],
-            "correct_answer": "Watt (W)"
+            "correct_answer": "Watt (W)",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Wanna play? Answer my question!",
             "question": "What type of engineer designs computer software and systems?",
             "choices": ["Civil Engineer", "Mechanical Engineer", "Software Engineer","Industrial Engineer"],
-            "correct_answer": "Software Engineer"
+            "correct_answer": "Software Engineer",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Hey! What do you know about liquids?",
             "question": "Which material is known as the universal solvent?",
             "choices": ["Water", "Diet Coke", "Juice","Turmeric"],
-            "correct_answer": "Water"
+            "correct_answer": "Water",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Are you ready for a question?",
             "question": "What is the largest organ in the human body?",
             "choices": ["Lungs", "Skin", "Liver","Heart"],
-            "correct_answer": "Skin"
+            "correct_answer": "Skin",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Here's a quick question for you!",
             "question": "Which planet is known as the Red Planet?",
             "choices": ["Earth", "Mars", "Uranus","Neptune"],
-            "correct_answer": "Mars"
+            "correct_answer": "Mars",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Hey! Are you good with plants?",
             "question": "What gas do plants release during photosynthesis?",
             "choices": ["Carbon Dioxide", "Oxygen", "Nitrogen","Sodium Chloride"],
-            "correct_answer": "Oxygen"
+            "correct_answer": "Oxygen",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Hi! Is pizza your favorite?",
             "question": "Which country is famous for inventing pizza?",
             "choices": ["Italy", "Spain", "Greece","Rome"],
-            "correct_answer": "Italy"
+            "correct_answer": "Italy",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "I'm not goot at Chemistry, can you help me with my assignment?",
             "question": "What is the chemical symbol of Water?",
             "choices": ["CO₂", "H₂O₂", "H₂O","HNO₂"],
-            "correct_answer": "H₂O"
+            "correct_answer": "H₂O",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Hey! Do you know what bird this is?",
             "question": "Which bird is known for being able to mimic human speech?",
             "choices": ["Penguin", "Dove", "Parrot","Eagle"],
-            "correct_answer": "Parrot"
+            "correct_answer": "Parrot",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Do you love dragons?",
             "question": "What type of animal is a Komodo Dragon?",
             "choices": ["Snake", "Lizard","Crocodile","Dragon"],
-            "correct_answer": "Lizard"
+            "correct_answer": "Lizard",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Hey! Quick question for you.",
             "question": "How many sides does a hexagon have?",
             "choices": ["Five", "Six", "Seven","Eight"],
-            "correct_answer": "Six"
+            "correct_answer": "Six",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Hey! Are you interested in paintings?",
             "question": "Who painted the famous artwork 'Mona Lisa'?",
             "choices": ["Pablo Picasso", "Vincent Van Gogh", "Leonardo da Vinci","Salvador Dali"],
-            "correct_asnwer": "Leonardo da Vinci"
+            "correct_asnwer": "Leonardo da Vinci",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Konnichiwa!",
             "question": "Which country is known as the Land of the Rising Sun?",
             "choices": ["China", "Japan", "Philippines","Thailand"],
-            "correct_answer": "Japan"
+            "correct_answer": "Japan",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         }
     ],
     "average": [
@@ -126,121 +666,661 @@
             "conversation": "Hey! Quick question for you.",
             "question": "The current flowing through a conductor between two points is directly proportional to the voltage across the two points, provided the temperature remains constant.",
             "choices": ["Ohms Law", "Kirchhoff's Current Law", "Faraday's Law","Coulomb's Law"],
-            "correct_answer": "Ohms Law"
+            "correct_answer": "Ohms Law",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "I'm not computer literate. I hope you are.",
             "question": "Identify the programming language commonly used for web development.",
             "choices": ["Python", "Hypertext Markup Language", "Java","C++"],
-            "correct_answer": "Hypertext Markup Language"
+            "correct_answer": "Hypertext Markup Language",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "So, I wanna ask you something. Ready?",
             "question": "Identify the component that controls the flow of current in one direction only.",
             "choices": ["Capacitor", "Resistor", "Diode","Transistor"],
-            "correct_answer": "Diode"
+            "correct_answer": "Diode",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "I got electrocuted yesterday. Dumb mistake! Anyway, I have a question for you.",
             "question": "Identify the type of current that changes direction periodically.",
             "choices": ["Alternating Current", "Direct Current", "Current","Voltage"],
-            "correct_answer": "Alternating Current"
+            "correct_answer": "Alternating Current",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "You a genius? Answer this!",
             "question": "Identify the device that converts AC voltage to DC voltage.",
             "choices": ["Transformer", "Rectifier", "Inductor","Buck Boost"],
-            "correct_answer": "Rectifier"
+            "correct_answer": "Rectifier",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "It's so hot right now. Wanna go swimming?",
             "question": "What is the largest ocean on Earth?",
             "choices": ["Indian Ocean", "Atlantic Ocean", "Pacific Ocean","Antarctic Ocean"],
-            "correct_answer": "Pacific Ocean"
+            "correct_answer": "Pacific Ocean",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Now, this is a CLASSIC. Perhaps you know this one?",
             "question": "Who wrote the play Romeo and Juliet?",
             "choices": ["William Shakespeare", "Mark Twain", "Charles Dickens","Leonard Williams"],
-            "correct_answer": "William Shakespeare"
+            "correct_answer": "William Shakespeare",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Okay, so, quick question!",
             "question": "What is the chemical symbol for gold?",
             "choices": ["Ag", "Au", "Go","Gd"],
-            "correct_answer": "Au"
+            "correct_answer": "Au",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Let's do math!",
             "question": "What is the smallest prime number?",
             "choices": ["1", "3", "2","7"],
-            "correct_answer": "2"
+            "correct_answer": "2",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Good Morning! Good Evening! Hello, Star!",
             "question": "Which planet is known as the 'Morning Star' or 'Evening Star'?",
             "choices": ["Venus", "Mars", "Mercury", "Neptune"],
-            "correct_answer": "Venus"
+            "correct_answer": "Venus",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "I'm not good at Computer. I hope you are.",
             "question": "What does 'www' stand for in a website browser?",
             "choices":["World Web Wave", "World Wide Web", "World Web Wide","World Wide Watermelon"],
-            "correct_answer": "World Wide Web"
+            "correct_answer": "World Wide Web",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Do you love Computers?",
             "question": "Who is known as the 'Father of Computers'?",
             "choices": ["Alan Turing", "Steve Jobs", "Charles Babbage","Elon Musk"],
-            "correct_answer": "Charles Babbage"
+            "correct_answer": "Charles Babbage",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Hey! I heard that you love travelling.",
             "question": "Which country is home to the Great Barrier Reef?",
             "choices": ["South Africa", "Australia", "Brazil","North Korea"],
-            "correct_answer": "Australia"
+            "correct_answer": "Australia",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Annyeonghaesayo!",
             "question" : "What is the capital of South Korea?",
             "choices" : ["Seoul", "Busan", "Tokyo", "Manila"],
-            "correct_answer": "Seoul"
+            "correct_answer": "Seoul",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "I love math, I hope you love math too!",
             "question": "What is the square root of 144?",
             "choices": ["10", "11", "12","13"],
-            "correct_answer": "12"
+            "correct_answer": "12",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "I was wondering who invented this medicine.",
             "question": "Who invented Penicillin?",
             "choices": ["Louis Pasteur", "Alexander Fleming", "Joseph Lister", "Galileo Galilei"],
-            "correct_answer": "Alexander Fleming"
+            "correct_answer": "Alexander Fleming",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Woah! Look at that car.",
             "question": "Which country does the car manufacturer 'Volkswagen' originate from?",
             "choices": ["Germany", "Sweden", "Italy","Philippines"],
-            "correct_answer": "Germany"
+            "correct_answer": "Germany",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Near, Far, Wherever you are!",
             "question": "In which year did Titanics sink?",
             "choices" : ["1912", "1920","1905", "1955"],
-            "correct_answer": "1912"
+            "correct_answer": "1912",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Holy Guacamole!",
             "question": "What is the main ingredient in Guacamole?",
             "choices": ["Tomato", "Cucumber","Avocado", "Onion"],
-            "correct_answer": "Avocado"
+            "correct_answer": "Avocado",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Olá, Bonjour, Konnichiwa, Hola",
             "question": "What is the primary language spoken in Brazil?",
             "choices": ["Spanish", "Japanese", "French", "Portuguese"],
-            "correct_answer": "Portuguese"
+            "correct_answer": "Portuguese",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         }
     ],
     "hard": [
@@ -248,121 +1328,663 @@
             "conversation": "Let's talk about metals!",
             "question": "What is the only metal that is liquid at room temperature?",
             "choices": ["Mercury", "Gold", "Silver","Copper"],
-            "correct_answer": "Mercury"
+            "correct_answer": "Mercury",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Have you ever been abroad?",
             "question": "What is the smallest country in the world by land area?",
             "choices": ["Japan", "Vatican City", "Thailand","China"],
-            "correct_answer": "Vatican City"
+            "correct_answer": "Vatican City",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "I have a programming question for you.",
             "question": "Which programming language is known for its use in developing embedded systems?",
             "choices": ["Lua", "Python", "C","Rust"],
-            "correct_answer": "C"
+            "correct_answer": "C",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Do you know anything about cybersecurity?",
             "question": "Which type of attack involves intercepting communication between two parties?",
             "choices": ["Man-in-the-Middle (MitM) attack","Denial-on-Service attack (DoS)", "Phishing", "Distributed Denial-on-Service (DDoS) attack"],
-            "correct_answer": "Man-in-the-Middle (MitM) attack"
+            "correct_answer": "Man-in-the-Middle (MitM) attack",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "I know nothing about computers. How about you?",
             "question": "Which type of memory is used for BIOS storage?",
             "choices": ["EPROM", "EEPROM", "RAM", "ROM"],
-            "correct_answer": "EEPROM"
+            "correct_answer": "EEPROM",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "I'm really bad at technology. Can you help me?",
             "question": "Identifies the hardware component responsible for controlling data flow between the CPU and other devices.",
             "choices": ["Chipset", "Arithmetic Logical Unit", "Control Unit","Central Processing Unit"],
-            "correct_answer": "Control Unit"
+            "correct_answer": "Control Unit",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "You have internet at home? Got a question for you.",
             "question": "Identifies the network device that connects multiple networks and routes data packets. ",
             "choices": ["Router", "Switch", "Modem","Wireless Fidelity"],
-            "correct_answer": "Router"
+            "correct_answer": "Router",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Hey! Quick question for you.",
             "question": "Identifies the component that stores frequently used data to reduce memory access time.",
             "choices": ["Capacitor", "Cache Memory", "Random Access Memory","Read Only Memory"],
-            "correct_answer": "Cache Memory"
+            "correct_answer": "Cache Memory",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Do you have a PC? I have a question for you.",
             "question": "Identifies the hardware responsible for graphics processing and rendering.",
             "choices": ["HDMI", "CPU", "GPU", "Wi-Fi"],
-            "correct_answer": "GPU"
+            "correct_answer": "GPU",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Let's talk about Physics!",
             "question": "Who discovered the law of universal gravitation?",
             "choices": ["Isaac Newton", "Albret Einstein", "Galileo Galilei","Louis Pasteur"],
-            "correct_answer": "Isaac Newton"
+            "correct_answer": "Isaac Newton",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Do you know that humans has 206 bones in total.",
             "question": "What is the smallest bone in the human body?",
             "choices" : ["Femur", "Malleus", "Incus", "Stapes"],
-            "correct_answer": "Stapes"
+            "correct_answer": "Stapes",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Hey! Quick question for you.",
             "question": "Which planet has the shortest day in the solar system?",
             "choices": ["Jupiter", "Mars","Neptune","Venus"],
-            "correct_answer": "Jupiter"
+            "correct_answer": "Jupiter",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Do you love desert? Not the sweets!",
             "question": "What is the large desert?",
             "choices": ["Gobi Desert", "Antarctic Desert", "Sahara Desert", "Arabian Desert"],
-            "correct_answer": "Antarcic Desert"
+            "correct_answer": "Antarcic Desert",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "I'm not good at Civics. Can you help me with my assignment?",
             "question": "What is the longest river in Asia?",
             "choices": ["Ganges", "Yellow River", "Mekong River", "Yangtze River"],
-            "correct_answer": "Yangtze River"
+            "correct_answer": "Yangtze River",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Hello! I love History, I hope you love History too.",
             "question": "Which country was formerly known as Persia?",
             "choices": ["Iraq", "Turkey", "Iran","Syria"],
-            "correct_answer": "Iran"
+            "correct_answer": "Iran",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Have you heard about the winners of the Nobel Prizes before?",
             "question": "Who was the first person to win two Nobel Prizes in different scientific fields?",
             "choices": ["Albret Einstein", "Linus Pauling", "Marie Curie", "Ernest Rutherford"],
-            "correct_answer": "Marie Curie"
+            "correct_answer": "Marie Curie",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "Let's talk about Greek Mythology!",
             "question": "Who was the Greek god of the underworold?",
             "choices": ["Zeus","Poseidon","Apollo","Hades"],
-            "correct_answer": "Hades"
+            "correct_answer": "Hades",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "I'm not good at Calculus. I hope you are.",
             "question": "Which mathematical concept is used to describe the rate of change in calculus?",
             "choices": ["Integral","Derivative","Matrix","Vector"],
-            "correct_answer": "Derivative"
+            "correct_answer": "Derivative",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "There's Hydrogen and Helium. Then Lithium, Beryllium. Boron, Carbon everywhere",
             "question": "Which element is essential for the production of nucleur energy in power plants?",
             "choices": ["Plutonium", "Radium", "Uranium", "Thorium"],
-            "correct_answer": "Uranium"
+            "correct_answer": "Uranium",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         },
         {
             "conversation": "How often do you use browser?",
             "question": "Who invented the World Wide Web?",
             "choices": ["Steve Jobs", "Bill Gates", "Tim Berners-Lee", "Alan Turing"],
-            "correct_answer": "Tim Berners-Lee"
+            "correct_answer": "Tim Berners-Lee",
+            "responses": {
+                "correct": [
+                   "Great job! You got it right!",
+                   "You're a genius! That's correct!",
+                   "You're on fire! That's correct!",
+                   "You're a star! That's correct!",
+                   "You're a rockstar! That's correct!",
+                   "You're a legend! That's correct!",
+                   "You're a wizard! That's correct!",
+                   "You're a superhero! That's correct!",
+                   "You're a champion! That's correct!",
+                   "You're a winner! That's correct!"
+               ],
+           
+               "wrong": [
+                   "Oops! That's incorrect!",
+                   "Oh no! That's incorrect!",
+                   "Sorry! That's incorrect!",
+                   "Wrong! That's incorrect!",
+                   "Incorrect! That's incorrect!",
+                   "Not quite! That's incorrect!",
+                   "Close! That's incorrect!",
+                   "Almost! That's incorrect!",
+                   "Not there yet! That's incorrect!",
+                   "Keep trying! That's incorrect!"
+               ]
+           }
         }
     ]
+
+   
 }
