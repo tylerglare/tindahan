@@ -3,6 +3,9 @@ from config import *
 import math
 import random
 import json
+import os
+from ui import DialogueBox
+
 
 class Spritesheet:
     def __init__(self, file):
@@ -27,14 +30,16 @@ class Player(pygame.sprite.Sprite):
         self.image = self.game.character_spritesheet.get_sprite(0, 0, self.width, self.height)
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = self.x, self.y
-
+        self.start_x = self.x  # Store the spawn point
+        self.start_y = self.y  # Store the spawn point
         # Movement
         self.x_change, self.y_change = 0, 0
         self.facing = "down"
         self.moving = False
 
         # Coins
-        self.coins = 20
+        self.coins = 0
+        self.inventory = []
 
         # Walking Animations
         self.down_animations = [self.game.mainwalkright_spritesheet.get_sprite(i * TILESIZE, 0, TILESIZE, TILESIZE) for i in range(4)]
@@ -53,7 +58,6 @@ class Player(pygame.sprite.Sprite):
         self.animation_speed = 150
 
     def update(self):
-        # Handle movement logic for Aling Nena NPC
         self.movement()
         self.animate()
 
@@ -141,19 +145,49 @@ class Player(pygame.sprite.Sprite):
             self.rect.top < 0 or
             self.rect.bottom > self.game.camera.height
         )
+    
+    def add_item(self, item):
+        self.inventory.append(item)
 
+    def remove_item(self, item):
+        if item in self.inventory:
+            self.inventory.remove(item)
+    
+    def has_item(self, item):
+        return item in self.inventory
 
 class NPC(pygame.sprite.Sprite):
     NPC_SPRITESHEETS = {
         "Tambay": {
             "walk_right": 'img/TINDAHAN CHARACTERS/TAMBAY1 WALK RIGHT.png',
             "walk_left": 'img/TINDAHAN CHARACTERS/TAMBAY1 WALK LEFT.png',
-            "idle": 'img/TINDAHAN CHARACTERS/TAMBAY1 IDLE RIGHT.png'
+            "idle": 'img/TINDAHAN CHARACTERS/TAMBAY1 IDLE RIGHT.png',
+            "portrait": 'img/PROFILE/TAMBAYP.png',
+            "name": "Tambay"
         },
         "Bata": {
             "walk_right": 'img/TINDAHAN CHARACTERS/BATA1 WALK RIGHT.png',
             "walk_left": 'img/TINDAHAN CHARACTERS/BATA1 WALK LEFT.png',
-            "idle": 'img/TINDAHAN CHARACTERS/BATA1 IDLE RIGHT.png'
+            "idle": 'img/TINDAHAN CHARACTERS/BATA1 IDLE RIGHT.png',
+            "portrait": 'img/PROFILE/BATAP.png',
+            "name": "Bata"
+        },
+        "Teacher": {
+            "walk_right": 'img/TINDAHAN CHARACTERS/TEACHER WALK RIGHT.png',
+            "walk_left": 'img/TINDAHAN CHARACTERS/TEACHER WALK LEFT.png',
+            "idle": 'img/TINDAHAN CHARACTERS/TEACHER IDLE RIGHT.png',
+            "portrait": 'img/PROFILE/TEACHERP.png',
+            "name": "Teacher"
+        },
+        "AlingNena": {
+            "idle": 'img/TINDAHAN CHARACTERS/ALINGNENA IDLE RIGHT.png',
+            "portrait": 'img/PROFILE/NENAP.png',
+            "name": "Aling Nena"
+        },
+        "Nanay": {
+            "idle": 'img/TINDAHAN CHARACTERS/NANAY IDLE RIGHT.png',
+            "portrait": 'img/PROFILE/NANAYP.png',
+            "name": "Nanay"
         }
         # Add more NPC types here
     }
@@ -161,6 +195,8 @@ class NPC(pygame.sprite.Sprite):
     def __init__(self, game, x, y, name="Tambay", difficulty="easy"):
         self.game = game
         self.name = name
+        self.sprites = NPC.NPC_SPRITESHEETS.get(name)
+        self.portrait_path = self.sprites.get('portrait')
         self.difficulty = difficulty  # Add difficulty level
         self._layer = NPC_LAYER
         self.groups = self.game.all_sprites, self.game.npcs
@@ -208,9 +244,7 @@ class NPC(pygame.sprite.Sprite):
         self.removed = False  # New flag to check if NPC should be deleted
         self.asked_question = False  # Flag to ensure the question is asked only once
         
-# Load questions from JSON file
-        # Replace this in the NPC class:
-        with open('questions.json') as f:
+        with open('c:\\Users\\This PC\\OneDrive\\Documents\\054\\TindahanGame\\questions.json') as f:
             self.questions = json.load(f)
 
     def load_animations(self, spritesheet):
@@ -336,11 +370,12 @@ class NPC(pygame.sprite.Sprite):
             elif self.difficulty == "hard":
                 question_data = random.choice(self.questions['hard'])
 
-            conversation = question_data.get('conversation', "Hello! I have a question for you.")
+            conversation = question_data.get('conversation')
             question = question_data['question']
             choices = question_data['choices']
             correct_answer = question_data['correct_answer']
-            self.game.show_question(conversation, question, self, choices, correct_answer)  # Pass all 5 arguments
+            responses = question_data.get('responses')
+            self.game.show_question(conversation, question, self, choices, correct_answer, responses)  # Pass all 5 arguments
             self.asked_question = True  # Set the flag to indicate the question has been asked
 
         self.animate()
@@ -377,7 +412,8 @@ class NPC(pygame.sprite.Sprite):
         self.rect.y = self.start_y
         self.idle = True
         self.idle_time = pygame.time.get_ticks()
-        self.asked_question = True  # Set the flag to indicate the enemy has asked a question
+        self.asked_question = False  # Reset the flag to allow new questions
+
 
 class Block(pygame.sprite.Sprite):
     def __init__(self, game, x, y, obj_type):
@@ -393,7 +429,10 @@ class Block(pygame.sprite.Sprite):
         # Load the full house image
         obj_images = {
             "H": "img/TINDAHAN CHARACTERS/BAHAY.png",
-            "G": "img/TINDAHAN CHARACTERS/BAHAY2.png"
+            "G": "img/TINDAHAN CHARACTERS/BAHAY2.png",
+            "Y": "img/TINDAHAN CHARACTERS/BAHAY3.png",
+            "L": "img/TINDAHAN CHARACTERS/BAHAY4.png"
+           
         }
         
         self.image = pygame.image.load(obj_images[obj_type]).convert_alpha()
@@ -404,8 +443,16 @@ class Block(pygame.sprite.Sprite):
         # Adjust rect size and position
         self.rect = self.image.get_rect()
         self.rect.topleft = (self.x, self.y)
+        
+        
+        self.image = pygame.image.load(obj_images[obj_type]).convert_alpha()
 
+        # Set correct width & height from image
+        self.width, self.height = self.image.get_size()
 
+        # Adjust rect size and position
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (self.x, self.y)
 
 class Block2(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -420,6 +467,69 @@ class Block2(pygame.sprite.Sprite):
         
         # Load the full house image
         self.image = pygame.image.load("img/TINDAHAN CHARACTERS/tree.png").convert_alpha()
+
+        # Set correct width & height from image
+        self.width, self.height = self.image.get_size()
+
+        # Adjust rect size and position
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (self.x, self.y)
+
+class School(pygame.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.game = game
+        self._layer = BLOCK2_LAYER
+        self.groups = self.game.all_sprites, self.game.blocks
+        pygame.sprite.Sprite.__init__(self, self.groups)
+
+        # Set position based on tile size
+        self.x = x * TILESIZE
+        self.y = y * TILESIZE
+        
+        # Load the full house image
+        self.image = pygame.image.load("img/TINDAHAN CHARACTERS/SCHOOL.png").convert_alpha()
+
+        # Set correct width & height from image
+        self.width, self.height = self.image.get_size()
+
+        # Adjust rect size and position
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (self.x, self.y)
+
+class Zone(pygame.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.game = game
+        self._layer = BLOCK2_LAYER
+        self.groups = self.game.all_sprites, self.game.blocks
+        pygame.sprite.Sprite.__init__(self, self.groups)
+
+        # Set position based on tile size
+        self.x = x * TILESIZE
+        self.y = y * TILESIZE
+        
+        # Load the full house image
+        self.image = pygame.image.load("img/TINDAHAN CHARACTERS/sign.png").convert_alpha()
+
+        # Set correct width & height from image
+        self.width, self.height = self.image.get_size()
+
+        # Adjust rect size and position
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (self.x, self.y)
+
+class Shop(pygame.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.game = game
+        self._layer = BLOCK2_LAYER
+        self.groups = self.game.all_sprites, self.game.blocks
+        pygame.sprite.Sprite.__init__(self, self.groups)
+
+        # Set position based on tile size
+        self.x = x * TILESIZE
+        self.y = y * TILESIZE
+        
+        # Load the full house image
+        self.image = pygame.image.load("img/TINDAHAN CHARACTERS/NENAS.png").convert_alpha()
 
         # Set correct width & height from image
         self.width, self.height = self.image.get_size()
@@ -477,123 +587,67 @@ class Road(pygame.sprite.Sprite):
         self.rect.topleft = (self.x, self.y)
 
 
+
 class Button:
-    def __init__(self, x, y, width, height, fg, bg, content, fontsize, alpha=255):
-        self.font = pygame.font.Font('PressStart2P-Regular.ttf', fontsize)
+    def __init__(self, x, y, width, height, bg, fg, content, fontsize, alpha=255):
+        self.font = pygame.font.Font(('PressStart2P-Regular.ttf'), fontsize)  # Use the passed fontsize
         self.content = content
         
         self.x = x
         self.y = y
         self.width = width
         self.height = height
-
-        self.fg = fg
         self.bg = bg
+        self.fg = fg
         self.alpha = alpha
+
+        if isinstance(bg, str) and os.path.exists(bg):
+            # Load the image as the background
+            self.image = pygame.image.load(bg).convert_alpha()
+            self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        else:
+            # Use a color as the background
+            self.image = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+            self.image.fill((*bg, self.alpha))
         
-        self.image = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
 
-        self.update_text(self.content)  # Ensure text is updated during initialization
-
-    def update_text(self, new_content):
-        self.content = new_content
+        # Initial render of the text
         self.text = self.font.render(self.content, True, self.fg)
         self.text_rect = self.text.get_rect(center=(self.width / 2, self.height / 2))
-        self.image.fill((*self.bg, self.alpha))
         self.image.blit(self.text, self.text_rect)
+        
+    def draw(self, screen):
+        # Draw the button onto the screen
+        screen.blit(self.image, self.rect)
 
+    def update_text(self, new_content):
+        """Update the text on the button and refresh the background."""
+        self.content = new_content
+        # Render the new text
+        self.text = self.font.render(self.content, True, self.fg)
+        self.text_rect = self.text.get_rect(center=(self.width / 2, self.height / 2))
+
+        # Clear the previous text (if any) and redraw the background
+        if isinstance(self.bg, tuple):  # If it's a solid color background
+            self.image.fill((*self.bg, self.alpha))
+        else:  # If it's an image background, reload and rescale it
+            self.image = pygame.image.load(self.bg).convert_alpha()
+            self.image = pygame.transform.scale(self.image, (self.width, self.height))
+
+        # Draw the new text over the background
+        self.image.blit(self.text, self.text_rect)
+        
     def is_pressed(self, pos, pressed):
+        """Check if the button is pressed."""
         if self.rect.collidepoint(pos):
             if pressed[0]:
                 return True
+            return False
         return False
-
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)
-
-class Attack(pygame.sprite.Sprite):
-
-    def __init__(self, game, x, y):
-
-        self.game = game
-        self._layer = PLAYER_LAYER
-        self.groups = self.game.all_sprites, self.game.attacks
-        pygame.sprite.Sprite.__init__(self, self.groups)
-
-        self.x = x
-        self.y = y
-        self.width = TILESIZE
-        self.height = TILESIZE
-
-        self.animation_loop = 0
-
-        self.image = self.game.attack_spritesheet.get_sprite(0, 0, self.width, self.height)
-        
-        self.rect = self.image.get_rect()
-        self.rect.x = self.x
-        self.rect.y = self.y
-
-        self.right_animations = [self.game.attack_spritesheet.get_sprite(0, 64, self.width, self.height),
-                           self.game.attack_spritesheet.get_sprite(32, 64, self.width, self.height),
-                           self.game.attack_spritesheet.get_sprite(64, 64, self.width, self.height),
-                           self.game.attack_spritesheet.get_sprite(96, 64, self.width, self.height),
-                           self.game.attack_spritesheet.get_sprite(128, 64, self.width, self.height)]
-
-        self.down_animations = [self.game.attack_spritesheet.get_sprite(0, 32, self.width, self.height),
-                           self.game.attack_spritesheet.get_sprite(32, 32, self.width, self.height),
-                           self.game.attack_spritesheet.get_sprite(64, 32, self.width, self.height),
-                           self.game.attack_spritesheet.get_sprite(96, 32, self.width, self.height),
-                           self.game.attack_spritesheet.get_sprite(128, 32, self.width, self.height)]
-
-        self.left_animations = [self.game.attack_spritesheet.get_sprite(0, 96, self.width, self.height),
-                           self.game.attack_spritesheet.get_sprite(32, 96, self.width, self.height),
-                           self.game.attack_spritesheet.get_sprite(64, 96, self.width, self.height),
-                           self.game.attack_spritesheet.get_sprite(96, 96, self.width, self.height),
-                           self.game.attack_spritesheet.get_sprite(128, 96, self.width, self.height)]
-
-        self.up_animations = [self.game.attack_spritesheet.get_sprite(0, 0, self.width, self.height),
-                         self.game.attack_spritesheet.get_sprite(32, 0, self.width, self.height),
-                         self.game.attack_spritesheet.get_sprite(64, 0, self.width, self.height),
-                         self.game.attack_spritesheet.get_sprite(96, 0, self.width, self.height),
-                         self.game.attack_spritesheet.get_sprite(128, 0, self.width, self.height)]
-        
-
-    def update(self):
-        self.animate()
-        self.collide()
-
-    def collide(self):
-        hits = pygame.sprite.spritecollide(self, self.game.npcs, True)
-
-    def animate(self):
-        direction = self.game.player.facing
-
-        if direction == 'up':
-            self.image = self.up_animations[math.floor(self.animation_loop)]
-            self.animation_loop += 0.05
-            if self.animation_loop >= 5:
-                self.kill()
-
-        if direction == 'down':
-            self.image = self.down_animations[math.floor(self.animation_loop)]
-            self.animation_loop += 0.05
-            if self.animation_loop >= 5:
-                self.kill()
-
-        if direction == 'left':
-            self.image = self.left_animations[math.floor(self.animation_loop)]
-            self.animation_loop += 0.5
-            if self.animation_loop >= 5:
-                self.kill()
-
-        if direction == 'right':
-            self.image = self.right_animations[math.floor(self.animation_loop)]
-            self.animation_loop += 0.5
-            if self.animation_loop >= 5:
-                self.kill()
+    
 
 class Camera:
     def __init__(self, width, height):
@@ -663,12 +717,23 @@ class AlingNena(pygame.sprite.Sprite):
         self.removed = False
         self.asked_question = False
         
+        npc_data = NPC.NPC_SPRITESHEETS["AlingNena"]
+        self.name = npc_data["name"]
+        self.portrait_path = npc_data["portrait"]
+
         # Special dialogue for Aling Nena
         self.dialogue = [
             "Welcome to my store!",
             "What can I get for you today?",
             "We have fresh items just arrived!"
         ]
+
+        self.item_prices = {
+            "Milk": 10,
+            "Bread": 5,
+            "Eggs": 8,
+            "Rice": 15
+        }
 
     def load_animations(self, spritesheet):
         animations = [
@@ -679,10 +744,8 @@ class AlingNena(pygame.sprite.Sprite):
     
     def update(self):
         if not self.removed:
-            #self.movement()
             self.animate()
             self.detect_player()
-
 
     def animate(self):
         now = pygame.time.get_ticks()
@@ -699,31 +762,50 @@ class AlingNena(pygame.sprite.Sprite):
                 if self.animation_loop >= len(animation_list):
                     self.animation_loop = 0
 
+
     def detect_player(self):
         if self.removed or self.asked_question:
             return
 
-        player_x, player_y = self.game.player.rect.x, self.game.player.rect.y
-        distance_x = abs(self.rect.x - player_x)
-        distance_y = abs(self.rect.y - player_y)
+        player_x, player_y = self.game.player.rect.center
+        npc_x, npc_y = self.rect.center
 
-        if distance_x + distance_y <= 2 * TILESIZE:  # Shorter detection range
-            # Create a special store question
-            store_question = {
-                "conversation": random.choice(self.dialogue),
-                "question": "Would you like to buy something from my store?",
-                "choices": ["Yes, please!", "No, thank you.", "Just looking around."],
-                "correct_answer": "Yes, please!"
-            }
-            
-            self.game.show_question(
-                store_question["conversation"], 
-                store_question["question"], 
-                self, 
-                store_question["choices"], 
-                store_question["correct_answer"]
-            )
+        distance = math.sqrt((npc_x - player_x) ** 2 + (npc_y - player_y) ** 2)
+
+        if distance <= 2 * TILESIZE:
+            self.game.handle_alingnena_interaction()
             self.asked_question = True
+
+
+    def buy_item(self, item):
+        if item in self.item_prices:
+            price = self.item_prices[item]
+            if self.game.player.coins >= price:
+                self.game.player.coins -= price
+                self.game.show_task_dialogue(
+                    f"You bought {item} for {price} coins!",
+                    self,
+                    [],  # ✅ Fix here!
+                    None,
+                    "You successfully completed the task!",
+                    "You failed to complete the task!"
+                )
+                nanay = next((npc for npc in self.game.npcs if isinstance(npc, Nanay)), None)
+                if nanay:
+                    nanay.complete_task(self.game.player)
+                    nanay.check_task_completion(item)
+                self.game.reset_game()
+            else:
+                self.game.show_task_dialogue(
+                    "You don't have enough coins!",
+                    self,
+                    [],  # ✅ Fix here!
+                    None,
+                    None,
+                    None
+                )
+                self.game.reset_game()
+
 
 
 class Nanay(pygame.sprite.Sprite):
@@ -738,6 +820,11 @@ class Nanay(pygame.sprite.Sprite):
         self.width = TILESIZE
         self.height = TILESIZE
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+        # Use the NPC_SPRITESHEETS dictionary to get the name and portrait
+        npc_data = NPC.NPC_SPRITESHEETS["Nanay"]
+        self.name = npc_data["name"]
+        self.portrait_path = npc_data["portrait"]
 
         # Load spritesheets
         self.left_spritesheet = self.game.nanayleft_spritesheet
@@ -768,7 +855,6 @@ class Nanay(pygame.sprite.Sprite):
         }
 
         self.image = self.animations[self.facing][0]
-        self.name = "Nanay"
         self.removed = False
         self.asked_question = False
         
@@ -778,6 +864,22 @@ class Nanay(pygame.sprite.Sprite):
             "Have you eaten already?",
             "Don't forget to do your homework!"
         ]
+
+        self.tasks = [
+            {"item": "Milk", "reward": 10, "penalty": -5},
+            {"item": "Bread", "reward": 5, "penalty": -3},
+            {"item": "Eggs", "reward": 7, "penalty": -4}
+        ]
+        self.current_task = None
+
+        self.item_prices = {
+            "Milk": 10,
+            "Bread": 5,
+            "Eggs": 8,
+            "Rice": 15
+    }
+        
+   
 
     def load_animations(self, spritesheet):
         animations = [
@@ -813,7 +915,7 @@ class Nanay(pygame.sprite.Sprite):
                 self.animation_loop += 1
                 if self.animation_loop >= len(animation_list):
                     self.animation_loop = 0
-
+    
     def detect_player(self):
         if self.removed or self.asked_question:
             return
@@ -822,21 +924,71 @@ class Nanay(pygame.sprite.Sprite):
         distance_x = abs(self.rect.x - player_x)
         distance_y = abs(self.rect.y - player_y)
 
-        if distance_x + distance_y <= 3 * TILESIZE:
-            # Create a special nanay question
-            nanay_question = {
-                "conversation": random.choice(self.dialogue),
-                "question": "What would you like for dinner tonight?",
-                "choices": ["Adobo", "Sinigang", "Tinola"],
-                "correct_answer": "Adobo"  # Nanay's favorite
-            }
-            
-            self.game.show_question(
-                nanay_question["conversation"], 
-                nanay_question["question"], 
-                self, 
-                nanay_question["choices"], 
-                nanay_question["correct_answer"]
-            )
-            self.asked_question = True
+        if distance_x + distance_y <= 2 * TILESIZE:
+            if not self.current_task:
+                self.assign_task()
 
+            if self.current_task:  # ✅ Only access if task is assigned
+                item = self.current_task['item']
+                self.game.show_task_dialogue(
+                    f"Anak, please buy me some {item} from the store.",
+                    self,
+                    ["Yes"],  # Only provide the "Yes" option
+                    "Yes",  # Correct answer is always "Yes"
+                    "Thank you for accepting the task!",
+                    "Maybe next time."  # Provide failure response
+                )
+                self.asked_question = True
+
+    def assign_task(self):
+        if not self.current_task:
+            self.current_task = random.choice(self.tasks)
+
+    def complete_task(self, player):
+        if self.current_task:
+            task_item = self.current_task['item']
+            penalty = self.current_task['penalty']
+            
+            if player.has_item(task_item):
+                print("Nanay: Thank you for the item!")
+                player.remove_item(task_item)
+            else:
+                player.coins += penalty
+                print(f"Nanay: That's not what I asked for! You lost {abs(penalty)} coins.")
+            
+            # Clear task after completion
+            self.current_task = None
+
+    def check_task_completion(self, item):
+        # ✅ Skip check if item is None (during reset)
+        if item is None:
+            return
+        
+        if self.current_task and item == self.current_task['item']:
+            conversation = "Thank you for completing the task!"
+            self.game.task_success = True
+            self.game.task_in_progress = False
+            self.game.current_task = None
+
+            # ✅ Clear task ONLY after checking
+            self.current_task = None
+            self.game.show_task_dialogue(
+                conversation,
+                self,
+                ["Okay"],
+                "Okay",
+                None,
+                None
+            )
+        else:
+            # ✅ Only show this if the player actively interacts (not during reset)
+            if self.game.task_in_progress:
+                conversation = "You haven't completed the task yet. Try again!"
+                self.game.show_task_dialogue(
+                    conversation,
+                    self,
+                    ["Okay"],
+                    "Okay",
+                    None,
+                    None
+                )
