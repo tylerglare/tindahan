@@ -4,12 +4,14 @@ import random
 import json
 
 class DialogueBox:
-    def __init__(self, screen, player, npc, box_image_path, frame_image_path, width, height):
+    def __init__(self, game, screen, player, npc, box_image_path, frame_image_path, width, height):
         self.screen = screen
         self.player = player
         self.image = pygame.image.load("img\DBOX.png").convert_alpha()
         self.image = pygame.transform.scale(self.image, (width, height))
         self.image_rect = self.image.get_rect()
+        
+        self.game = game
         
 
         # Load portrait and frame
@@ -76,7 +78,7 @@ class DialogueBox:
         start_x = box_x + 140
         start_y = box_y + 80
         for i, line in enumerate(current_text.split("\n")):
-            text_surface = self.font.render(line, True, self.WHITE)
+            text_surface = self.font.render(line, True, self.BLACK)
             self.screen.blit(text_surface, (start_x, start_y + i * 20))
 
     def show_dialogue(self, npc, dialogue, question, choices, correct_answer, responses):
@@ -99,7 +101,7 @@ class DialogueBox:
         finished_typing = False
 
         # Split the dialogue into lines that fit the box width
-        lines = self.fit_text(dialogue, 460)
+        lines = self.fit_text(dialogue, 430)
 
         while running:
             for event in pygame.event.get():
@@ -115,7 +117,7 @@ class DialogueBox:
                             pygame.display.flip()
 
                             # 👉 Transition to question box
-                            question_box = QuestionBox(self.screen, self.player, self, 'img/QBOX.png', self.width, self.height)
+                            question_box = QuestionBox(self, self.screen, self.player, self, 'img/QBOX.png', self.width, self.height)
                             question_box.show_question(npc, question, choices, correct_answer, responses)
                         else:
                             current_text = "\n".join(lines)
@@ -145,10 +147,27 @@ class DialogueBox:
 
             pygame.display.flip()
 
-    def show_response(self, npc, response):
+    def show_response(self, npc, response ):
+        # Default response logic based on success/failure and difficulty
+        task_success = getattr(self.game, 'task_success', None)
+        difficulty = getattr(self.game, 'difficulty', None)
 
-        if not response:
-            response = "No response available."  # Default message
+        if response is None:
+            if npc and hasattr(npc, 'name'):
+                if npc.name == "Aling Nena":
+                    if task_success is False:  # Failed interaction (e.g., not enough coins)
+                        response =  "Thank you for buying, come again!"
+                    else:
+                        response = "You Lose"
+                elif npc.name == "Nanay":
+                    if task_success and difficulty == 'hard':
+                        response = "Congrats!"  # Success on hard difficulty
+                    else:
+                        response = "Come home."
+                else:
+                    response = "Hello there!"
+            else:
+                response = "No response available."
 
         lines = self.fit_text(response, 460)
         button_x = 625
@@ -212,7 +231,7 @@ class DialogueBox:
 
 
 class QuestionBox:
-    def __init__(self, screen, player, dialogue_box, box_image_path, width, height):
+    def __init__(self, game, screen, player, dialogue_box, box_image_path, width, height):
         self.screen = screen
         self.player = player
         self.dialogue_box = dialogue_box
@@ -221,10 +240,10 @@ class QuestionBox:
 
         self.width = width
         self.height = height
-
+        self.game = game
         self.font = pygame.font.Font('PressStart2P-Regular.ttf', 15)
         self.WHITE = (255, 255, 255)
-
+        self.BLACK = (0, 0, 0)
         self.button_image = pygame.image.load('img/ABUT.png').convert_alpha()
         self.button_width = 300
         self.button_height = 80
@@ -232,27 +251,7 @@ class QuestionBox:
 
 
 
-    def adjust_brightness(self, button_image, factor):
-        """Adjust the brightness of the button image."""
-        img = button_image.copy()
-
-        # Iterate through every pixel in the image and adjust brightness
-        width, height = img.get_size()
-
-        for x in range(width):
-            for y in range(height):
-                color = img.get_at((x, y))  # Get the color at (x, y) as a pygame.Color
-                r, g, b, a = color  # Extract the red, green, blue, and alpha components
-
-                # Apply the factor and make sure the values stay within 0-255
-                r = min(int(r * factor), 255)
-                g = min(int(g * factor), 255)
-                b = min(int(b * factor), 255)
-
-                # Set the new color back to the pixel
-                img.set_at((x, y), (r, g, b, a))
-
-        return img
+   
 
 
     def fit_text(self, text, max_width):
@@ -274,14 +273,18 @@ class QuestionBox:
         return lines
 
     def show_question(self, npc, question, choices, correct_answer, responses):
-        question_box = pygame.Rect(50, 100, 300, 100)
+        question_box = pygame.Rect(50, 100, 600, 150)  # Adjusted width to fit text
         buttons = []
 
-        button_x = 150
+        button_x = 75
         button_y = 320
         button_spacing_x = 350
         button_spacing_y = 100
-        lines = self.fit_text(question, 460)
+
+        # ✅ Wrap the text to fit within 460 pixels
+        max_text_width = 460  
+        wrapped_lines = self.fit_text(question, max_text_width)
+
         for i, choice in enumerate(choices):
             col = i % 2
             row = i // 2
@@ -295,14 +298,19 @@ class QuestionBox:
         while running:
             self.screen.blit(self.image, (question_box.x, question_box.y))
 
-            question_text = self.font.render(question, True, self.WHITE)
-            text_rect = question_text.get_rect()
-            text_rect.x = 200  # Set X position
-            text_rect.y = 170  # Set Y position
-            self.screen.blit(question_text, text_rect)
+            # ✅ Dynamically adjust Y position for multi-line question text
+            start_x = 200  
+            start_y = 175  
+            line_spacing = 25  
 
+            for i, line in enumerate(wrapped_lines):
+                question_text = self.font.render(line, True, self.BLACK)
+                self.screen.blit(question_text, (start_x, start_y + i * line_spacing))
+
+            # ✅ Render buttons
             for button, choice in buttons:
                 self.screen.blit(self.button_image, button.topleft)
+                
                 choice_text = self.font.render(choice, True, self.WHITE)
                 self.screen.blit(choice_text, choice_text.get_rect(center=button.center))
 
@@ -314,36 +322,29 @@ class QuestionBox:
                     sys.exit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     for button, choice in buttons:
-                        mouse_pos = pygame.mouse.get_pos()
-
-                        # Adjust brightness for hover
-                        if button.collidepoint(mouse_pos):
-                            button_image = self.adjust_brightness(self.button_image, 5)  # Brighter on hover
-                        else:
-                            button_image = self.button_image
-
-                        self.screen.blit(button_image, button.topleft)
-
-                        # Handle click
-                        if event.type == pygame.MOUSEBUTTONDOWN and button.collidepoint(event.pos):
+                        if button.collidepoint(event.pos):
                             running = False
                             self.player.game.draw()
                             pygame.display.flip()
                             
                             # Handle answer result
                             if choice == correct_answer:
-                                self.player.coins += 1
-                                response = random.choice(responses["correct"])  # Pick a correct response
+                                if npc.name not in ["Aling Nena", "Nanay"]:
+                                    difficulty = getattr(self.game, 'difficulty', 'easy')
+                                    self.player.coins += {"easy": 1, "average": 2, "hard": 3}.get(difficulty, 1)
+                                response = random.choice(responses["correct"])
                                 if npc and hasattr(npc, 'return_to_spawn'):
                                     npc.return_to_spawn()
                             else:
-                                self.player.coins -= 1
-                                response = random.choice(responses["wrong"])  # Pick a wrong response
+                                if npc.name not in ["Aling Nena", "Nanay"]:
+                                    difficulty = getattr(self.game, 'difficulty', 'easy')
+                                    self.player.coins -= {"easy": 3, "average": 5, "hard": 7}.get(difficulty, 3)
+                                response = random.choice(responses["wrong"])
 
                             print(f"Coins: {self.player.coins}")
                             
-                            # Pass the selected string response instead of the whole dictionary
-                            response_box = DialogueBox(self.screen, self.player, npc, 'img/QBOX.png', 'img/frame.png', self.width, self.height)
-                            response_box.show_response(npc, response)  # Pass a single string response
+                            response_box = DialogueBox(self.game, self.screen, self.player, npc, 'img/QBOX.png', 'img/frame.png', self.width, self.height)
+                            response_box.show_response(npc, response)
 
             pygame.time.delay(100)
+            pygame.display.flip()
