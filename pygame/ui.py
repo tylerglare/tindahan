@@ -331,14 +331,24 @@ class QuestionBox:
                             if choice == correct_answer:
                                 if npc.name not in ["Aling Nena", "Nanay"]:
                                     difficulty = getattr(self.game, 'difficulty', 'easy')
-                                    self.player.coins += {"easy": 1, "average": 2, "hard": 3}.get(difficulty, 1)
+                                    if difficulty == "easy":
+                                        self.player.coins +=1 
+                                    if difficulty == "average":
+                                        self.player.coins +=2
+                                    if difficulty == "hard":
+                                        self.player.coins +=3
                                 response = random.choice(responses["correct"])
                                 if npc and hasattr(npc, 'return_to_spawn'):
                                     npc.return_to_spawn()
                             else:
                                 if npc.name not in ["Aling Nena", "Nanay"]:
                                     difficulty = getattr(self.game, 'difficulty', 'easy')
-                                    self.player.coins -= {"easy": 3, "average": 5, "hard": 7}.get(difficulty, 3)
+                                    if difficulty == "easy":
+                                        self.player.coins -=3 
+                                    if difficulty == "average":
+                                        self.player.coins -=5
+                                    if difficulty == "hard":
+                                        self.player.coins -=7
                                 response = random.choice(responses["wrong"])
 
                             print(f"Coins: {self.player.coins}")
