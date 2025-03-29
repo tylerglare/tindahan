@@ -747,13 +747,13 @@ class Game:
             "DIFFICULTY:",
             "The game has three difficulty levels:",
             "- Easy: Questions are Easy",
-            "           Rewards: 1 coin",
+        
             "           Penalty: 3 coins",
             "- Average: Questions are set in Average Difficulty",
-            "           Rewards: 2 coins",
+            
             "           Penalty: 5 coins",
             "- Hard: Questions are set in Hard Difficulty",
-            "           Rewards: 3 coins",
+            
             "           Penalty: 7 coins",
             "",
             "TIPS:",
