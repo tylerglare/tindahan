@@ -165,7 +165,7 @@ class DialogueBox:
                     else:
                         response = "Come home."
                 else:
-                    response = "Hello there!"
+                    response = "Thank you for buying, come again!"
             else:
                 response = "No response available."
 
@@ -189,7 +189,7 @@ class DialogueBox:
         finished_typing = False
 
         # Split the response into lines that fit the box width
-        lines = self.fit_text(response, 460)
+        lines = self.fit_text(response, 430)
 
         while running:
             for event in pygame.event.get():
@@ -282,7 +282,7 @@ class QuestionBox:
         button_spacing_y = 100
 
         # ✅ Wrap the text to fit within 460 pixels
-        max_text_width = 460  
+        max_text_width = 430  
         wrapped_lines = self.fit_text(question, max_text_width)
 
         for i, choice in enumerate(choices):
