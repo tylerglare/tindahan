@@ -27,7 +27,7 @@ class Player(pygame.sprite.Sprite):
 
         self.x, self.y = x * TILESIZE, y * TILESIZE
         self.width, self.height = TILESIZE, TILESIZE
-        self.image = self.game.character_spritesheet.get_sprite(0, 0, self.width, self.height)
+        self.image = self.game.mainidleright_spritesheet.get_sprite(0, 0, self.width, self.height)
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = self.x, self.y
         self.start_x = self.x  # Store the spawn point
@@ -43,15 +43,17 @@ class Player(pygame.sprite.Sprite):
 
         # Walking Animations
         self.down_animations = [self.game.mainwalkright_spritesheet.get_sprite(i * TILESIZE, 0, TILESIZE, TILESIZE) for i in range(4)]
+        self.down_animations = [self.game.mainwalkleft_spritesheet.get_sprite(i * TILESIZE, 0, TILESIZE, TILESIZE) for i in range(4)]
         self.up_animations = [self.game.mainwalkright_spritesheet.get_sprite(i * TILESIZE, 0, TILESIZE, TILESIZE) for i in range(4)]
+        self.up_animations = [self.game.mainwalkleft_spritesheet.get_sprite(i * TILESIZE, 0, TILESIZE, TILESIZE) for i in range(4)]
         self.left_animations = [self.game.mainwalkleft_spritesheet.get_sprite(i * TILESIZE, 0, TILESIZE, TILESIZE) for i in range(4)]
         self.right_animations = [self.game.mainwalkright_spritesheet.get_sprite(i * TILESIZE, 0, TILESIZE, TILESIZE) for i in range(4)]
 
         # Idle Animations
-        self.idle_right_animations = [self.game.character_spritesheet.get_sprite(i * TILESIZE, 0, TILESIZE, TILESIZE) for i in range(4)]
-        self.idle_left_animations = [self.game.character_spritesheet.get_sprite(i * TILESIZE, 0, TILESIZE, TILESIZE) for i in range(4)]
-        self.idle_up_animations = [self.game.character_spritesheet.get_sprite(i * TILESIZE, 0, TILESIZE, TILESIZE) for i in range(4)]
-        self.idle_down_animations = [self.game.character_spritesheet.get_sprite(i * TILESIZE, 0, TILESIZE, TILESIZE) for i in range(4)]
+        self.idle_right_animations = [self.game.mainidleright_spritesheet.get_sprite(i * TILESIZE, 0, TILESIZE, TILESIZE) for i in range(4)]
+        self.idle_left_animations = [self.game.mainidleleft_spritesheet.get_sprite(i * TILESIZE, 0, TILESIZE, TILESIZE) for i in range(4)]
+        #self.idle_up_animations = [self.game.character_spritesheet.get_sprite(i * TILESIZE, 0, TILESIZE, TILESIZE) for i in range(4)]
+        #self.idle_down_animations = [self.game.character_spritesheet.get_sprite(i * TILESIZE, 0, TILESIZE, TILESIZE) for i in range(4)]
 
         self.animation_index = 0
         self.last_update = pygame.time.get_ticks()
@@ -85,22 +87,28 @@ class Player(pygame.sprite.Sprite):
         self.last_move = now
         self.moving = False
 
-        if keys[pygame.K_LEFT]:
+        horizontal_movement = False
+
+        # Horizontal movement takes priority for facing direction
+        if keys[pygame.K_a]:
             self.x_change = -PLAYER_SPEED
             self.facing = 'left'
             self.moving = True
-        if keys[pygame.K_RIGHT]:
+            horizontal_movement = True
+        if keys[pygame.K_d]:
             self.x_change = PLAYER_SPEED
             self.facing = 'right'
             self.moving = True
-        if keys[pygame.K_UP]:
+            horizontal_movement = True
+        
+        # Vertical movement doesn't override facing direction if a horizontal direction was last pressed
+        if keys[pygame.K_w]:
             self.y_change = -PLAYER_SPEED
-            self.facing = 'up'
             self.moving = True
-        if keys[pygame.K_DOWN]:
+        elif keys[pygame.K_s]:
             self.y_change = PLAYER_SPEED
-            self.facing = 'down'
             self.moving = True
+
 
     def animate(self):
         now = pygame.time.get_ticks()
@@ -109,23 +117,22 @@ class Player(pygame.sprite.Sprite):
             self.animation_index = (self.animation_index + 1) % 4
 
             if self.moving:
-                if self.facing == "down":
-                    self.image = self.down_animations[self.animation_index]
-                elif self.facing == "up":
-                    self.image = self.up_animations[self.animation_index]
-                elif self.facing == "left":
+                if self.facing == "left":
                     self.image = self.left_animations[self.animation_index]
                 elif self.facing == "right":
                     self.image = self.right_animations[self.animation_index]
-            else:
-                if self.facing == "down":
-                    self.image = self.idle_down_animations[self.animation_index]
                 elif self.facing == "up":
-                    self.image = self.idle_up_animations[self.animation_index]
-                elif self.facing == "left":
+                    self.image = self.up_animations[self.animation_index]
+                elif self.facing == "down":
+                    self.image = self.down_animations[self.animation_index]
+            else:
+                # Force idle to last left or right direction
+                if self.facing == "left":
                     self.image = self.idle_left_animations[self.animation_index]
                 elif self.facing == "right":
                     self.image = self.idle_right_animations[self.animation_index]
+
+
 
     def collide_solid(self, direction):
         """Prevents the player from walking through enemies or blocks."""
@@ -182,7 +189,7 @@ class NPC(pygame.sprite.Sprite):
         "AlingNena": {
             "idle": 'img/TINDAHAN CHARACTERS/ALINGNENA IDLE RIGHT.png',
             "portrait": 'img/PROFILE/NENAP.png',
-            "name": "Aling Nena"
+            "name": "Nena"
         },
         "Nanay": {
             "idle": 'img/TINDAHAN CHARACTERS/NANAY IDLE RIGHT.png',
@@ -197,7 +204,7 @@ class NPC(pygame.sprite.Sprite):
         self.name = name
         self.sprites = NPC.NPC_SPRITESHEETS.get(name)
         self.portrait_path = self.sprites.get('portrait')
-        self.difficulty = difficulty  # Add difficulty level
+        self.difficulty = difficulty  # Default difficulty, will be updated dynamically
         self._layer = NPC_LAYER
         self.groups = self.game.all_sprites, self.game.npcs
         pygame.sprite.Sprite.__init__(self, self.groups)
@@ -362,21 +369,28 @@ class NPC(pygame.sprite.Sprite):
             self.rect.x = target_x
             self.rect.y = target_y
 
-            # Get a random question based on difficulty
-            if self.difficulty == "easy":
-                question_data = random.choice(self.questions['easy'])
-            elif self.difficulty == "average":
-                question_data = random.choice(self.questions['average'])
-            elif self.difficulty == "hard":
-                question_data = random.choice(self.questions['hard'])
+            # Determine difficulty based on loop count
+            difficulty = "easy" if self.game.loop_count == 0 else "average" if self.game.loop_count == 1 else "hard"
 
-            conversation = question_data.get('conversation')
+            # Select a random question from the current difficulty
+            question_data = random.choice(self.questions[difficulty])
+            conversation = question_data['conversation']
             question = question_data['question']
             choices = question_data['choices']
             correct_answer = question_data['correct_answer']
             responses = question_data.get('responses')
-            self.game.show_question(conversation, question, self, choices, correct_answer, responses)  # Pass all 5 arguments
-            self.asked_question = True  # Set the flag to indicate the question has been asked
+
+            # Show the question
+            self.game.show_question(
+                conversation,
+                question,
+                self,
+                choices,
+                correct_answer,
+                responses,
+                difficulty  # Pass the difficulty argument
+            )
+            self.asked_question = True
 
         self.animate()
 
@@ -697,6 +711,8 @@ class AlingNena(pygame.sprite.Sprite):
         self.start_tile = (self.rect.x, self.rect.y)
         self.start_x = x * TILESIZE
         self.start_y = y * TILESIZE
+        self.start_x = self.rect.x  # Save starting position
+        self.start_y = self.rect.y
         self.direction = 'right'  # Start facing right
 
         # Direction
@@ -714,8 +730,8 @@ class AlingNena(pygame.sprite.Sprite):
 
         self.image = self.animations[self.facing][0]
         self.name = "Aling Nena"
+        self.asked_question = False  # Initialize interaction flag
         self.removed = False
-        self.asked_question = False
         
         npc_data = NPC.NPC_SPRITESHEETS["AlingNena"]
         self.name = npc_data["name"]
@@ -731,8 +747,10 @@ class AlingNena(pygame.sprite.Sprite):
         self.item_prices = {
             "Milk": 10,
             "Bread": 5,
-            "Eggs": 8,
-            "Rice": 15
+            "Toyo": 8,
+            "Suka": 8,
+            "Rice": 8,
+            "Eggs": 15
         }
 
     def load_animations(self, spritesheet):
@@ -741,11 +759,6 @@ class AlingNena(pygame.sprite.Sprite):
             for i in range(4)
         ]
         return animations
-    
-    def update(self):
-        if not self.removed:
-            self.animate()
-            self.detect_player()
 
     def animate(self):
         now = pygame.time.get_ticks()
@@ -775,7 +788,16 @@ class AlingNena(pygame.sprite.Sprite):
         if distance <= 2 * TILESIZE:
             self.game.handle_alingnena_interaction()
             self.asked_question = True
+            self.asked_question = not self.asked_question
 
+
+    def update(self):
+        if not self.removed:
+            self.animate()
+            self.detect_player()
+        else:
+            # ✅ Reset interaction state after game reset
+            self.asked_question = False
 
     def buy_item(self, item):
         if item in self.item_prices:
@@ -794,6 +816,8 @@ class AlingNena(pygame.sprite.Sprite):
                 if nanay:
                     nanay.complete_task(self.game.player)
                     nanay.check_task_completion(item)
+                self.game.task_success = True
+                self.asked_question = False
                 self.game.reset_game()
             else:
                 self.game.show_task_dialogue(
@@ -804,7 +828,9 @@ class AlingNena(pygame.sprite.Sprite):
                     None,
                     None
                 )
+                
                 self.game.reset_game()
+                self.asked_question = False 
 
 
 
@@ -868,6 +894,9 @@ class Nanay(pygame.sprite.Sprite):
         self.tasks = [
             {"item": "Milk", "reward": 10, "penalty": -5},
             {"item": "Bread", "reward": 5, "penalty": -3},
+            {"item": "Toyo", "reward": 10, "penalty": -5},
+            {"item": "Suka", "reward": 10, "penalty": -5},
+            {"item": "Rice", "reward": 10, "penalty": -5},
             {"item": "Eggs", "reward": 7, "penalty": -4}
         ]
         self.current_task = None
@@ -875,8 +904,10 @@ class Nanay(pygame.sprite.Sprite):
         self.item_prices = {
             "Milk": 10,
             "Bread": 5,
-            "Eggs": 8,
-            "Rice": 15
+            "Toyo": 8,
+            "Suka": 8,
+            "Rice": 8,
+            "Eggs": 15
     }
         
    
@@ -943,6 +974,7 @@ class Nanay(pygame.sprite.Sprite):
     def assign_task(self):
         if not self.current_task:
             self.current_task = random.choice(self.tasks)
+            print(f"Nanay assigned a new task: {self.current_task}")  # Debugging step
 
     def complete_task(self, player):
         if self.current_task:
