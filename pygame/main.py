@@ -24,13 +24,13 @@ class Game:
         # Initialize attributes for sprites and NPCs
         self.all_sprites = pygame.sprite.LayeredUpdates()
         self.blocks = pygame.sprite.LayeredUpdates()
-        self.npcs = pygame.sprite.LayeredUpdates()  # Initialize self.npcs
+        self.npcs = pygame.sprite.LayeredUpdates()  
 
 
-        self.aling_nena = None  # Initialize self.aling_nena as None
-        self.player = None  # Initialize self.player as None
+        self.aling_nena = None 
+        self.player = None  
 
-        # Other initializations...
+    
         self.mainidleright_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/JUNJUN IDLE RIGHT.png')
         self.mainidleleft_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/JUNJUN IDLE LEFT.png')
         self.mainwalkright_spritesheet = Spritesheet('img/TINDAHAN CHARACTERS/JUNJUN WALK RIGHT.png')
@@ -62,7 +62,7 @@ class Game:
         self.go_background = pygame.image.load('img/gameover.png')
         self.questions = self.load_questions()
 
-        # Initialize active dialogue and question box
+        
         mixer.music.load('Audio.mp3')  # Initialize background music
         mixer.music.play(-1)  # Loop music
         mixer.music.set_volume(1.0)
@@ -71,7 +71,7 @@ class Game:
 
         self.current_task = None
         self.task_in_progress = False
-        self.loop_count = 0  # Add a loop counter
+        self.loop_count = 0  
         self.difficulty = "easy"
 
     def load_questions(self):
@@ -81,7 +81,7 @@ class Game:
     
     def show_task_dialogue(self, conversation, npc, choices, correct_answer, success_response, failure_response):
         self.active_dialogue = DialogueBox(
-        self,  # ✅ Pass the game instance here
+        self,  
         self.screen,
         self.player,
         npc,
@@ -104,7 +104,7 @@ class Game:
             }
         )
 
-        # Reward the player with 20 coins if the task is accepted
+        
         if correct_answer == "Yes":
             self.player.coins += 10
             print(f'{success_response}')
@@ -157,24 +157,24 @@ class Game:
         self.npcs = pygame.sprite.LayeredUpdates()
         self.attacks = pygame.sprite.LayeredUpdates()
 
-        self.createTilemap()  # Recreate the game world
+        self.createTilemap()  
 
         map_width = len(tilemap[0]) * TILESIZE
         map_height = len(tilemap) * TILESIZE
 
-        # Initialize the camera with the full map size
+       
         self.camera = Camera(map_width, map_height)
 
         self.current_task = None
         self.task_success = False
         self.task_in_progress = False
-        print(f"Loop count remains: {self.loop_count}")  # Debugging step
+        print(f"Loop count remains: {self.loop_count}") 
 
         # Assign difficulty to NPCs based on the current loop
         difficulty = "easy" if self.loop_count == 0 else "average" if self.loop_count == 1 else "hard"
         for npc in self.npcs:
             npc.difficulty = difficulty  # Dynamically set NPC difficulty
-            print(f"Assigned difficulty '{difficulty}' to NPC: {npc.name}")  # Debugging step
+            print(f"Assigned difficulty '{difficulty}' to NPC: {npc.name}")  
 
     def events(self):
         for event in pygame.event.get():
@@ -193,7 +193,7 @@ class Game:
                 # Scale the intro background to match the new screen size
                 self.intro_background = pygame.transform.scale(self.intro_background, (self.scaled_width, self.scaled_height))
 
-                # Redraw the screen after resizing
+                
                 self.draw()
 
             if event.type == pygame.KEYDOWN:
@@ -204,7 +204,7 @@ class Game:
     def show_question(self, conversation, question, npc, choices, correct_answer, responses, difficulty):
        
         self.active_dialogue = DialogueBox(
-        self,  # ✅ Pass the game instance here
+        self, 
         self.screen,
         self.player,
         npc,
@@ -230,26 +230,26 @@ class Game:
             # Assign a new task directly
             nanay.assign_task()  # Delegate task assignment to Nanay
             self.current_task = nanay.current_task
-            print(f"Assigned new task: {self.current_task}")  # Debugging step
+            print(f"Assigned new task: {self.current_task}")  
             self.task_in_progress = True
             conversation = f"Please buy {self.current_task['item']} from Aling Nena for {self.current_task['cost']} coins."
             self.show_dialogue("Nanay", conversation)
         elif self.task_in_progress:
-            # If the player says "Yes" to the task
+           
             response = "Thank you for accepting the task!"
             self.show_dialogue("Nanay", response)
-            # Task is now active, proceed to buying/checking state next
+            
         else:
             self.check_task_completion()
 
     def check_task_completion(self):
         if self.task_success:
-            print("Task successfully completed!")  # Debugging step
+            print("Task successfully completed!") 
             conversation = "Thank you for completing the task!"
             self.task_success = False
             self.task_in_progress = False
             self.current_task = None
-            self.player.coins += 5  # Reward for success
+            self.player.coins += 5 
         else:
             conversation = "You haven't completed the task yet. Try again!"
         self.show_dialogue("Nanay", conversation)
@@ -260,7 +260,7 @@ class Game:
         aling_nena = next((npc for npc in self.npcs if isinstance(npc, AlingNena)), None)
 
         if nanay and nanay.current_task and aling_nena:
-            print(f"Interacting with Aling Nena. Current task: {nanay.current_task}")  # Debugging step
+            print(f"Interacting with Aling Nena. Current task: {nanay.current_task}") 
             task = nanay.current_task
             item = task['item']
             print(f"Item to buy: {item}")
@@ -273,8 +273,8 @@ class Game:
                 self.show_task_dialogue(
                     f"You bought {item} for {cost} coins",
                     aling_nena,
-                    ["Okay"],  # Just an "Okay" button
-                    "Okay",    # No logic needed since it's just a confirmation
+                    ["Okay"], 
+                    "Okay",    
                     None,
                     None
                 )
@@ -287,8 +287,8 @@ class Game:
                 self.show_task_dialogue(
                     "You don't have enough coins!",
                     aling_nena,
-                    ["Okay"],  # Just an "Okay" button
-                    "Okay",    # No logic needed since it's just a failure message
+                    ["Okay"], 
+                    "Okay",   
                     None,
                     None
                 )
@@ -317,7 +317,7 @@ class Game:
         if npc.name not in self.asked_questions:
             self.asked_questions[npc.name] = set()
 
-        # Get all questions for the current difficulty
+        
         available_questions = [
             q for q in self.questions[difficulty] 
             if q['question'] not in self.asked_questions[npc.name]
@@ -330,26 +330,26 @@ class Game:
 
         question_data = random.choice(available_questions)
 
-        # Mark question as asked
+      
         self.asked_questions[npc.name].add(question_data['question'])
 
         return question_data
 
     def reset_game(self):
-        print("reset_game called")  # Debugging step
-        print(f"Current task before reset: {self.current_task}")  # Debugging step
+        print("reset_game called")  
+        print(f"Current task before reset: {self.current_task}")  
 
         aling_nena = next((npc for npc in self.npcs if isinstance(npc, AlingNena)), None)
         nanay = next((npc for npc in self.npcs if isinstance(npc, Nanay)), None)
 
        
-        # Reset player position (e.g., near Nanay)
+        # Reset player position 
         if nanay:
             self.player.rect.x = nanay.rect.x + TILESIZE
             self.player.rect.y = nanay.rect.y
             self.player.x = nanay.rect.x - TILESIZE
             self.player.y = nanay.rect.y
-            print(f"Player position reset near Nanay: ({self.player.rect.x}, {self.player.rect.y})")  # Debugging step
+            print(f"Player position reset near Nanay: ({self.player.rect.x}, {self.player.rect.y})") 
 
         # Reset Aling Nena's position and state
         if aling_nena:
@@ -359,7 +359,7 @@ class Game:
             aling_nena.asked_question = False  # Explicitly reset this flag
             aling_nena.removed = False  # Explicitly reset this flag
                 
-            print(f"Aling Nena position reset: ({aling_nena.rect.x}, {aling_nena.rect.y})")  # Debugging step
+            print(f"Aling Nena position reset: ({aling_nena.rect.x}, {aling_nena.rect.y})")  
 
         # Reset task-related variables
         self.task_success = False
@@ -368,20 +368,18 @@ class Game:
 
         # Reset NPC states
         for npc in self.npcs:
-            npc.asked_question = False  # Reset any question-related flags
+            npc.asked_question = False  
             npc.removed = False  
             if hasattr(npc, 'return_to_spawn'):
-                npc.return_to_spawn()       # Reset any removed NPCs
+                npc.return_to_spawn()      
 
         print("Resetting game state for the next loop...")
-        print(f"Current task before reset: {self.current_task}")  # Debugging step
+        print(f"Current task before reset: {self.current_task}")  
 
         # Increment the loop count
         self.loop_count += 1
-        print(f"Loop count incremented to: {self.loop_count}")  # Debugging step
+        print(f"Loop count incremented to: {self.loop_count}")  
 
-        # Assign a new task to Nanay AFTER resetting the game state
-        
 
         # Check if the game should end after 3 loops
         if self.loop_count >= 3:
@@ -394,7 +392,7 @@ class Game:
             nanay.current_task = None  # Clear the previous task
             nanay.assign_task()  # Assign a new task
             self.current_task = nanay.current_task  # Update the game's current task
-            print(f"New task assigned: {self.current_task}")  # Debugging step
+            print(f"New task assigned: {self.current_task}") 
 
         
 
@@ -402,15 +400,15 @@ class Game:
         if event.type == pygame.USEREVENT + 1:
             nanay = next((npc for npc in self.npcs if isinstance(npc, Nanay)), None)
             if nanay and self.current_task:
-                # ✅ Let Nanay check the task
+              
                 nanay.check_task_completion(self.current_task['item'])
 
-                # ✅ Now clear the task AFTER checking
+              
                 self.current_task = None
                 self.task_success = False
                 self.task_in_progress = False
 
-            # ✅ Stop the timer after one call
+           
             pygame.time.set_timer(pygame.USEREVENT + 1, 0)
 
     def check_alingnena_interaction(self):
@@ -700,13 +698,13 @@ class Game:
     def how_to_play_screen(self):
         how_to_play = True
         
-        # Title setup
+       
         title_font = pygame.font.Font('PressStart2P-Regular.ttf', 27)
         content_font = pygame.font.Font('PressStart2P-Regular.ttf', 10)
         title_text = title_font.render('How to Play', True, WHITE)
         title_rect = title_text.get_rect(centerx=self.screen.get_width() // 2, top=20)
         
-        # Background setup
+       
         self.how_to_play_bg = pygame.image.load('img/MENUBG.png')
         self.how_to_play_bg = pygame.transform.scale(self.how_to_play_bg, (self.scaled_width, self.scaled_height))
         
@@ -718,11 +716,11 @@ class Game:
             500                      # height
         )
         
-        # Load and scale the text background image
+       
         text_bg_image = pygame.image.load('img/DBOX.png')
         text_bg_image = pygame.transform.scale(text_bg_image, (text_bg_rect.width, text_bg_rect.height))
         
-        # Back button setup
+       
         button_image_path = 'img/ABUT.png'
         back_button = Button(281, 450, 240, 50, button_image_path, WHITE, 'Back', self.font_button)
         margin = 150
@@ -737,7 +735,7 @@ class Game:
             'scroll_speed': 20
         }
         
-        # How to play content - each item is a paragraph
+       
         how_to_play_text = [
             "Welcome to Tindahan ni Aling Nena!",
             "",
@@ -777,7 +775,7 @@ class Game:
              "at Tindahan ni Aling Nena!"
         ]
         
-        # Render all text lines
+       
         rendered_lines = []
         total_height = 0
         
@@ -957,7 +955,7 @@ class Game:
 g = Game()
 g.intro_screen()
 while g.running:
-    g.run_game_loop()  # Run the game loop 3 times
+    g.run_game_loop() 
     g.game_over()
 
 pygame.quit()
