@@ -262,6 +262,7 @@ class NPC(pygame.sprite.Sprite):
         return animations
     
     def update(self):
+        
         if not self.removed:  # Only update if NPC is not removed
             self.movement()
             self.animate()
@@ -304,8 +305,8 @@ class NPC(pygame.sprite.Sprite):
                 self.movement_loop = 0
                 self.start_tile = (self.rect.x, self.rect.y)
 
-            self.rect.x = max(0, min(self.rect.x, WIN_WIDTH - self.width))
-            self.rect.y = max(0, min(self.rect.y, WIN_HEIGHT - self.height))
+            self.rect.x = max(0, min(self.rect.x, self.game.map_width - self.width))
+            self.rect.y = max(0, min(self.rect.y,self.game.map_height - self.height))
 
     def collide_with_blocks(self, direction):
         if direction == 'x':
@@ -355,21 +356,24 @@ class NPC(pygame.sprite.Sprite):
         distance_x = target_x - self.rect.x
         distance_y = target_y - self.rect.y
 
+        # Move in X direction
         if abs(distance_x) > 0:
             step_x = min(self.speed, abs(distance_x)) * (1 if distance_x > 0 else -1)
             self.rect.x += step_x
             self.facing = "right" if step_x > 0 else "left"
 
+        # Move in Y direction
         if abs(distance_y) > 0:
             step_y = min(self.speed, abs(distance_y)) * (1 if distance_y > 0 else -1)
             self.rect.y += step_y
             self.facing = "down" if step_y > 0 else "up"
 
-        if abs(distance_x) < self.speed and abs(distance_y) < self.speed:
+        # 🔥 Ensure NPC stops **exactly** at the target position
+        if abs(distance_x) <= self.speed and abs(distance_y) <= self.speed:
             self.rect.x = target_x
             self.rect.y = target_y
 
-            # Determine difficulty based on loop count
+            # Select difficulty based on loop count
             difficulty = "easy" if self.game.loop_count == 0 else "average" if self.game.loop_count == 1 else "hard"
 
             # Select a random question from the current difficulty
@@ -394,17 +398,18 @@ class NPC(pygame.sprite.Sprite):
 
         self.animate()
 
+
     def get_position_in_front_of_player(self, player_x, player_y):
         """Finds the position directly in front of the player."""
         if self.game.player.facing == "up":
-            return (player_x, player_y + TILESIZE)
+            return (player_x, player_y - TILESIZE)  # Move UP
         elif self.game.player.facing == "down":
-            return (player_x, player_y - TILESIZE)
+            return (player_x, player_y + TILESIZE)  # Move DOWN
         elif self.game.player.facing == "left":
-            return (player_x + TILESIZE, player_y)
+            return (player_x - TILESIZE, player_y)  # Move LEFT
         elif self.game.player.facing == "right":
-            return (player_x - TILESIZE, player_y)
-        return (player_x, player_y)  # Default to player's position
+            return (player_x + TILESIZE, player_y)  # Move RIGHT
+        return (player_x, player_y)  # Default (failsafe)
 
     def remove_npc(self):
         """Removes NPC permanently."""
