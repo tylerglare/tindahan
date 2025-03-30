@@ -117,7 +117,7 @@ class DialogueBox:
                             pygame.display.flip()
 
                             # 👉 Transition to question box
-                            question_box = QuestionBox(self, self.screen, self.player, self, 'img/QBOX.png', self.width, self.height)
+                            question_box = QuestionBox(self.game, self.screen, self.player, self, 'img/QBOX.png', self.width, self.height)
                             question_box.show_question(npc, question, choices, correct_answer, responses)
                         else:
                             current_text = "\n".join(lines)
@@ -149,19 +149,19 @@ class DialogueBox:
 
     def show_response(self, npc, response ):
         # Default response logic based on success/failure and difficulty
-        task_success = getattr(self.game, 'task_success', None)
+        
         difficulty = getattr(self.game, 'difficulty', None)
 
         if response is None:
             if npc and hasattr(npc, 'name'):
                 if npc.name == "Aling Nena":
-                    if task_success is False:  # Failed interaction (e.g., not enough coins)
-                        response =  "Thank you for buying, come again!"
+                    if self.game.task_success is False:  # Failed interaction (e.g., not enough coins)
+                        response =  "You Lose"
                     else:
-                        response = "You Lose"
+                        response =  "Come again!"
                 elif npc.name == "Nanay":
-                    if task_success and difficulty == 'hard':
-                        response = "Congrats!"  # Success on hard difficulty
+                    if self.game.task_success and difficulty == 'hard':
+                        response = "Congratulations! You won!"  # Success on hard difficulty
                     else:
                         response = "Come home."
                 else:
@@ -310,10 +310,17 @@ class QuestionBox:
             # ✅ Render buttons
             for button, choice in buttons:
                 self.screen.blit(self.button_image, button.topleft)
-                
-                choice_text = self.font.render(choice, True, self.WHITE)
-                self.screen.blit(choice_text, choice_text.get_rect(center=button.center))
 
+                # Adjust font size dynamically
+                choice_font = self.font
+                while choice_font.size(choice)[0] > self.button_width - 20:  # Reduce font if too wide
+                    choice_font = pygame.font.Font('PressStart2P-Regular.ttf', choice_font.get_height() - 1)
+
+                choice_text = choice_font.render(choice, True, self.WHITE)
+                
+                # Center the text within the button
+                text_rect = choice_text.get_rect(center=button.center)
+                self.screen.blit(choice_text, text_rect)
             pygame.display.flip()
 
             for event in pygame.event.get():
@@ -330,24 +337,23 @@ class QuestionBox:
                             # Handle answer result
                             if choice == correct_answer:
                                 if npc.name not in ["Aling Nena", "Nanay"]:
-                                    difficulty = getattr(self.game, 'difficulty', 'easy')
-                                    if difficulty == "easy":
+                                    
+                                    if self.game.difficulty == "easy":
                                         self.player.coins +=1 
-                                    if difficulty == "average":
+                                    if self.game.difficulty == "average":
                                         self.player.coins +=2
-                                    if difficulty == "hard":
+                                    if self.game.difficulty == "hard":
                                         self.player.coins +=3
                                 response = random.choice(responses["correct"])
                                 if npc and hasattr(npc, 'return_to_spawn'):
                                     npc.return_to_spawn()
                             else:
                                 if npc.name not in ["Aling Nena", "Nanay"]:
-                                    difficulty = getattr(self.game, 'difficulty', 'easy')
-                                    if difficulty == "easy":
+                                    if self.game.difficulty == "easy":
                                         self.player.coins -=3 
-                                    if difficulty == "average":
+                                    if self.game.difficulty == "average":
                                         self.player.coins -=5
-                                    if difficulty == "hard":
+                                    if self.game.difficulty == "hard":
                                         self.player.coins -=7
                                 response = random.choice(responses["wrong"])
 
