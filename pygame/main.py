@@ -18,7 +18,9 @@ class Game:
         self.camera_surface = pygame.Surface((CAM_WIDTH, CAM_HEIGHT))
         self.running = True
         self.font_button = 16
-
+        
+        self.map_width = len(tilemap[0]) * TILESIZE
+        self.map_height = len(tilemap) * TILESIZE
         # Initialize attributes for sprites and NPCs
         self.all_sprites = pygame.sprite.LayeredUpdates()
         self.blocks = pygame.sprite.LayeredUpdates()
@@ -68,10 +70,9 @@ class Game:
         self.previous_volume = 1.0
 
         self.current_task = None
-        self.task_success = False
         self.task_in_progress = False
         self.loop_count = 0  # Add a loop counter
-       
+        self.difficulty = "easy"
 
     def load_questions(self):
         with open('questions.json', 'r') as file:
@@ -113,7 +114,9 @@ class Game:
         
     def createTilemap(self):
         for i, row in enumerate(tilemap):
+          
             for j, column in enumerate(row):
+                
                 Ground(self, j, i)
                 if column == "T":
                     Block2(self, j, i)
@@ -122,9 +125,11 @@ class Game:
                 if column in ['1', '2', '3', '4', '5', '6']:
                     Road(self, j, i, int(column)) 
                 if column == "X":
+                    print(f"Spawning Teacher at ({j}, {i})")  # DEBUG
                     difficulty = "easy" if self.loop_count == 0 else "average" if self.loop_count == 1 else "hard"
                     NPC(self, j, i, name="Teacher", difficulty=difficulty)
                 if column == "C":
+                    print(f"Spawning Tambay at ({j}, {i})")  # DEBUG
                     difficulty = "easy" if self.loop_count == 0 else "average" if self.loop_count == 1 else "hard"
                     NPC(self, j, i, name="Tambay", difficulty=difficulty)
                 if column == "B":
@@ -446,6 +451,13 @@ class Game:
         # Game loop updates
         self.all_sprites.update()
         self.camera.update(self.player)
+
+        if self.loop_count == 0:
+            self.difficulty = "easy"
+        elif self.loop_count == 1:
+            self.difficulty = "average"
+        else:
+            self.difficulty = "hard"
         nanay = next((npc for npc in self.npcs if isinstance(npc, Nanay)), None)
         if nanay and pygame.sprite.collide_rect(self.player, nanay):
             self.handle_nanay_interaction()
@@ -612,11 +624,11 @@ class Game:
                             if not self.is_muted:
                                 self.previous_volume = current_volume
                                 mixer.music.set_volume(0.0)
-                                mute_button.update_text('Unmute')
+                                mute_button.update_text('UNMUTE')
                                 self.is_muted = True
                             else:
                                 mixer.music.set_volume(self.previous_volume)
-                                mute_button.update_text('Mute')
+                                mute_button.update_text('MUTE')
                                 self.is_muted = False
                     elif event.type == pygame.MOUSEBUTTONUP:
                         dragging_slider = False
@@ -730,8 +742,8 @@ class Game:
             "Welcome to Tindahan ni Aling Nena!",
             "",
             "OBJECTIVE:",
-            "Complete tasks by buying items from Aling Nena's store ",
-            "and returning them to Nanay.",
+            "Complete tasks by buying items from Aling Nena's store.",
+            "",
             "CONTROLS:",
             "- Use A,S,D,W to move your character",
             "- Go near NPCs to interact",
@@ -747,13 +759,13 @@ class Game:
             "DIFFICULTY:",
             "The game has three difficulty levels:",
             "- Easy: Questions are Easy",
-        
+            "           Reward: 1 coin",
             "           Penalty: 3 coins",
             "- Average: Questions are set in Average Difficulty",
-            
+             "          Reward: 2 coins",
             "           Penalty: 5 coins",
             "- Hard: Questions are set in Hard Difficulty",
-            
+            "           Reward: 3 coins",
             "           Penalty: 7 coins",
             "",
             "TIPS:",
