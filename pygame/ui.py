@@ -123,7 +123,7 @@ class DialogueBox:
                             current_text = "\n".join(lines)
                             finished_typing = True
 
-            # ✅ Use the draw_dialogue_box function
+            
             self.draw_dialogue_box(npc, dialogue, current_text)
 
             # Typing effect
@@ -148,7 +148,7 @@ class DialogueBox:
             pygame.display.flip()
 
     def show_response(self, npc, response ):
-        # Default response logic based on success/failure and difficulty
+        
         
         difficulty = getattr(self.game, 'difficulty', None)
 
@@ -204,7 +204,7 @@ class DialogueBox:
                             current_text = "\n".join(lines)
                             finished_typing = True
 
-            # ✅ Use the draw_dialogue_box function
+           
             self.draw_dialogue_box(npc, response, current_text)
 
             # Typing effect
@@ -281,7 +281,7 @@ class QuestionBox:
         button_spacing_x = 350
         button_spacing_y = 100
 
-        # ✅ Wrap the text to fit within 460 pixels
+      
         max_text_width = 430  
         wrapped_lines = self.fit_text(question, max_text_width)
 
@@ -298,7 +298,7 @@ class QuestionBox:
         while running:
             self.screen.blit(self.image, (question_box.x, question_box.y))
 
-            # ✅ Dynamically adjust Y position for multi-line question text
+         
             start_x = 200  
             start_y = 175  
             line_spacing = 25  
@@ -307,7 +307,7 @@ class QuestionBox:
                 question_text = self.font.render(line, True, self.BLACK)
                 self.screen.blit(question_text, (start_x, start_y + i * line_spacing))
 
-            # ✅ Render buttons
+            
             for button, choice in buttons:
                 self.screen.blit(self.button_image, button.topleft)
 
