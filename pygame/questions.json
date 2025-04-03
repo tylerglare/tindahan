@@ -465,8 +465,8 @@
         {
             "conversation": "I'm not goot at Chemistry, can you help me with my assignment?",
             "question": "What is the chemical symbol of Water?",
-            "choices": ["CO₂", "H₂O₂", "H₂O","HNO₂"],
-            "correct_answer": "H₂O",
+            "choices": ["CO2", "H2O2", "H2O","HNO2"],
+            "correct_answer": "H2O",
             "responses": {
                 "correct": [
                    "Great job! You got it right!",
